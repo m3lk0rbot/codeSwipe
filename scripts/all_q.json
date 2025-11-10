@@ -1,0 +1,1042 @@
+[
+  {
+    "title": "Two Sum Problem",
+    "language": "JavaScript",
+    "difficulty": "Beginner",
+    "description": "Given an array of integers and a target sum, return indices of two numbers that add up to the target.",
+    "starterCode": "function twoSum(nums, target) {\n  // Your code here\n}",
+    "solution": "function twoSum(nums, target) {\n  const map = new Map();\n  for (let i = 0; i < nums.length; i++) {\n    const complement = target - nums[i];\n    if (map.has(complement)) {\n      return [map.get(complement), i];\n    }\n    map.set(nums[i], i);\n  }\n  return [];\n}",
+    "testCases": [
+      { "input": { "nums": [2, 7, 11, 15], "target": 9 }, "expected": [0, 1] },
+      { "input": { "nums": [3, 2, 4], "target": 6 }, "expected": [1, 2] },
+      { "input": { "nums": [3, 3], "target": 6 }, "expected": [0, 1] }
+    ]
+  },
+  {
+    "title": "Valid Palindrome Check",
+    "language": "JavaScript",
+    "difficulty": "Beginner",
+    "description": "Given a string, determine if it is a palindrome, considering only alphanumeric characters and ignoring case.",
+    "starterCode": "function isPalindrome(s) {\n  // Your code here\n}",
+    "solution": "function isPalindrome(s) {\n  const cleaned = s.toLowerCase().replace(/[^a-z0-9]/g, '');\n  let left = 0, right = cleaned.length - 1;\n  while (left < right) {\n    if (cleaned[left] !== cleaned[right]) return false;\n    left++;\n    right--;\n  }\n  return true;\n}",
+    "testCases": [
+      { "input": { "s": "A man, a plan, a canal: Panama" }, "expected": true },
+      { "input": { "s": "race a car" }, "expected": false },
+      { "input": { "s": " " }, "expected": true }
+    ]
+  },
+  {
+    "title": "Remove Array Duplicates",
+    "language": "JavaScript",
+    "difficulty": "Beginner",
+    "description": "Remove duplicates from a sorted array in-place and return the new length.",
+    "starterCode": "function removeDuplicates(nums) {\n  // Your code here\n}",
+    "solution": "function removeDuplicates(nums) {\n  if (nums.length === 0) return 0;\n  let i = 0;\n  for (let j = 1; j < nums.length; j++) {\n    if (nums[j] !== nums[i]) {\n      i++;\n      nums[i] = nums[j];\n    }\n  }\n  return i + 1;\n}",
+    "testCases": [
+      { "input": { "nums": [1, 1, 2] }, "expected": 2 },
+      { "input": { "nums": [0, 0, 1, 1, 1, 2, 2, 3, 3, 4] }, "expected": 5 },
+      { "input": { "nums": [1, 2, 3] }, "expected": 3 }
+    ]
+  },
+  {
+    "title": "Longest Substring Without Repeating",
+    "language": "JavaScript",
+    "difficulty": "Intermediate",
+    "description": "Find the length of the longest substring without repeating characters.",
+    "starterCode": "function lengthOfLongestSubstring(s) {\n  // Your code here\n}",
+    "solution": "function lengthOfLongestSubstring(s) {\n  const map = new Map();\n  let maxLen = 0, left = 0;\n  for (let right = 0; right < s.length; right++) {\n    if (map.has(s[right])) {\n      left = Math.max(map.get(s[right]) + 1, left);\n    }\n    map.set(s[right], right);\n    maxLen = Math.max(maxLen, right - left + 1);\n  }\n  return maxLen;\n}",
+    "testCases": [
+      { "input": { "s": "abcabcbb" }, "expected": 3 },
+      { "input": { "s": "bbbbb" }, "expected": 1 },
+      { "input": { "s": "pwwkew" }, "expected": 3 }
+    ]
+  },
+  {
+    "title": "Group Anagrams Together",
+    "language": "JavaScript",
+    "difficulty": "Intermediate",
+    "description": "Group an array of strings into anagrams.",
+    "starterCode": "function groupAnagrams(strs) {\n  // Your code here\n}",
+    "solution": "function groupAnagrams(strs) {\n  const map = new Map();\n  for (const str of strs) {\n    const key = str.split('').sort().join('');\n    if (!map.has(key)) map.set(key, []);\n    map.get(key).push(str);\n  }\n  return Array.from(map.values());\n}",
+    "testCases": [
+      { "input": { "strs": ["eat", "tea", "tan", "ate", "nat", "bat"] }, "expected": [["eat", "tea", "ate"], ["tan", "nat"], ["bat"]] },
+      { "input": { "strs": [""] }, "expected": [[""]] },
+      { "input": { "strs": ["a"] }, "expected": [["a"]] }
+    ]
+  },
+  {
+    "title": "Container With Water",
+    "language": "JavaScript",
+    "difficulty": "Intermediate",
+    "description": "Find two lines that together with x-axis form a container holding the most water.",
+    "starterCode": "function maxArea(height) {\n  // Your code here\n}",
+    "solution": "function maxArea(height) {\n  let maxWater = 0, left = 0, right = height.length - 1;\n  while (left < right) {\n    const width = right - left;\n    const h = Math.min(height[left], height[right]);\n    maxWater = Math.max(maxWater, width * h);\n    if (height[left] < height[right]) left++;\n    else right--;\n  }\n  return maxWater;\n}",
+    "testCases": [
+      { "input": { "height": [1, 8, 6, 2, 5, 4, 8, 3, 7] }, "expected": 49 },
+      { "input": { "height": [1, 1] }, "expected": 1 },
+      { "input": { "height": [4, 3, 2, 1, 4] }, "expected": 16 }
+    ]
+  },
+  {
+    "title": "Minimum Window Substring",
+    "language": "JavaScript",
+    "difficulty": "Intermediate",
+    "description": "Find the minimum window substring in s that contains all characters of t.",
+    "starterCode": "function minWindow(s, t) {\n  // Your code here\n}",
+    "solution": "function minWindow(s, t) {\n  const need = new Map();\n  for (const c of t) need.set(c, (need.get(c) || 0) + 1);\n  let left = 0, right = 0, valid = 0, start = 0, minLen = Infinity;\n  const window = new Map();\n  while (right < s.length) {\n    const c = s[right];\n    right++;\n    if (need.has(c)) {\n      window.set(c, (window.get(c) || 0) + 1);\n      if (window.get(c) === need.get(c)) valid++;\n    }\n    while (valid === need.size) {\n      if (right - left < minLen) {\n        start = left;\n        minLen = right - left;\n      }\n      const d = s[left];\n      left++;\n      if (need.has(d)) {\n        if (window.get(d) === need.get(d)) valid--;\n        window.set(d, window.get(d) - 1);\n      }\n    }\n  }\n  return minLen === Infinity ? '' : s.substring(start, start + minLen);\n}",
+    "testCases": [
+      { "input": { "s": "ADOBECODEBANC", "t": "ABC" }, "expected": "BANC" },
+      { "input": { "s": "a", "t": "a" }, "expected": "a" },
+      { "input": { "s": "a", "t": "aa" }, "expected": "" }
+    ]
+  },
+  {
+    "title": "Three Sum Problem",
+    "language": "JavaScript",
+    "difficulty": "Advanced",
+    "description": "Find all unique triplets in the array that sum to zero.",
+    "starterCode": "function threeSum(nums) {\n  // Your code here\n}",
+    "solution": "function threeSum(nums) {\n  nums.sort((a, b) => a - b);\n  const result = [];\n  for (let i = 0; i < nums.length - 2; i++) {\n    if (i > 0 && nums[i] === nums[i - 1]) continue;\n    let left = i + 1, right = nums.length - 1;\n    while (left < right) {\n      const sum = nums[i] + nums[left] + nums[right];\n      if (sum === 0) {\n        result.push([nums[i], nums[left], nums[right]]);\n        while (left < right && nums[left] === nums[left + 1]) left++;\n        while (left < right && nums[right] === nums[right - 1]) right--;\n        left++;\n        right--;\n      } else if (sum < 0) left++;\n      else right--;\n    }\n  }\n  return result;\n}",
+    "testCases": [
+      { "input": { "nums": [-1, 0, 1, 2, -1, -4] }, "expected": [[-1, -1, 2], [-1, 0, 1]] },
+      { "input": { "nums": [0, 1, 1] }, "expected": [] },
+      { "input": { "nums": [0, 0, 0] }, "expected": [[0, 0, 0]] }
+    ]
+  },
+  {
+    "title": "Longest Palindromic Substring",
+    "language": "JavaScript",
+    "difficulty": "Advanced",
+    "description": "Find the longest palindromic substring in a given string.",
+    "starterCode": "function longestPalindrome(s) {\n  // Your code here\n}",
+    "solution": "function longestPalindrome(s) {\n  let start = 0, maxLen = 0;\n  const expandAroundCenter = (left, right) => {\n    while (left >= 0 && right < s.length && s[left] === s[right]) {\n      left--;\n      right++;\n    }\n    return right - left - 1;\n  };\n  for (let i = 0; i < s.length; i++) {\n    const len1 = expandAroundCenter(i, i);\n    const len2 = expandAroundCenter(i, i + 1);\n    const len = Math.max(len1, len2);\n    if (len > maxLen) {\n      maxLen = len;\n      start = i - Math.floor((len - 1) / 2);\n    }\n  }\n  return s.substring(start, start + maxLen);\n}",
+    "testCases": [
+      { "input": { "s": "babad" }, "expected": "bab" },
+      { "input": { "s": "cbbd" }, "expected": "bb" },
+      { "input": { "s": "a" }, "expected": "a" }
+    ]
+  },
+  {
+    "title": "Trapping Rain Water",
+    "language": "JavaScript",
+    "difficulty": "Advanced",
+    "description": "Calculate how much water can be trapped after raining given elevation map represented by an array.",
+    "starterCode": "function trap(height) {\n  // Your code here\n}",
+    "solution": "function trap(height) {\n  if (height.length === 0) return 0;\n  let left = 0, right = height.length - 1;\n  let leftMax = 0, rightMax = 0, water = 0;\n  while (left < right) {\n    if (height[left] < height[right]) {\n      if (height[left] >= leftMax) leftMax = height[left];\n      else water += leftMax - height[left];\n      left++;\n    } else {\n      if (height[right] >= rightMax) rightMax = height[right];\n      else water += rightMax - height[right];\n      right--;\n    }\n  }\n  return water;\n}",
+    "testCases": [
+      { "input": { "height": [0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1] }, "expected": 6 },
+      { "input": { "height": [4, 2, 0, 3, 2, 5] }, "expected": 9 },
+      { "input": { "height": [4, 2, 3] }, "expected": 1 }
+    ]
+  },
+  {
+    "title": "Two Sum Problem",
+    "language": "Python",
+    "difficulty": "Beginner",
+    "description": "Given an array of integers and a target sum, return indices of two numbers that add up to the target.",
+    "starterCode": "def two_sum(nums, target):\n    # Your code here\n    pass",
+    "solution": "def two_sum(nums, target):\n    seen = {}\n    for i, num in enumerate(nums):\n        complement = target - num\n        if complement in seen:\n            return [seen[complement], i]\n        seen[num] = i\n    return []",
+    "testCases": [
+      { "input": { "nums": [2, 7, 11, 15], "target": 9 }, "expected": [0, 1] },
+      { "input": { "nums": [3, 2, 4], "target": 6 }, "expected": [1, 2] },
+      { "input": { "nums": [3, 3], "target": 6 }, "expected": [0, 1] }
+    ]
+  },
+  {
+    "title": "Valid Palindrome Check",
+    "language": "Python",
+    "difficulty": "Beginner",
+    "description": "Given a string, determine if it is a palindrome, considering only alphanumeric characters and ignoring case.",
+    "starterCode": "def is_palindrome(s):\n    # Your code here\n    pass",
+    "solution": "def is_palindrome(s):\n    cleaned = ''.join(c.lower() for c in s if c.isalnum())\n    left, right = 0, len(cleaned) - 1\n    while left < right:\n        if cleaned[left] != cleaned[right]:\n            return False\n        left += 1\n        right -= 1\n    return True",
+    "testCases": [
+      { "input": { "s": "A man, a plan, a canal: Panama" }, "expected": true },
+      { "input": { "s": "race a car" }, "expected": false },
+      { "input": { "s": " " }, "expected": true }
+    ]
+  },
+  {
+    "title": "Remove Array Duplicates",
+    "language": "Python",
+    "difficulty": "Beginner",
+    "description": "Remove duplicates from a sorted array in-place and return the new length.",
+    "starterCode": "def remove_duplicates(nums):\n    # Your code here\n    pass",
+    "solution": "def remove_duplicates(nums):\n    if not nums:\n        return 0\n    i = 0\n    for j in range(1, len(nums)):\n        if nums[j] != nums[i]:\n            i += 1\n            nums[i] = nums[j]\n    return i + 1",
+    "testCases": [
+      { "input": { "nums": [1, 1, 2] }, "expected": 2 },
+      { "input": { "nums": [0, 0, 1, 1, 1, 2, 2, 3, 3, 4] }, "expected": 5 },
+      { "input": { "nums": [1, 2, 3] }, "expected": 3 }
+    ]
+  },
+  {
+    "title": "Longest Substring Without Repeating",
+    "language": "Python",
+    "difficulty": "Intermediate",
+    "description": "Find the length of the longest substring without repeating characters.",
+    "starterCode": "def length_of_longest_substring(s):\n    # Your code here\n    pass",
+    "solution": "def length_of_longest_substring(s):\n    char_map = {}\n    max_len = left = 0\n    for right, char in enumerate(s):\n        if char in char_map:\n            left = max(char_map[char] + 1, left)\n        char_map[char] = right\n        max_len = max(max_len, right - left + 1)\n    return max_len",
+    "testCases": [
+      { "input": { "s": "abcabcbb" }, "expected": 3 },
+      { "input": { "s": "bbbbb" }, "expected": 1 },
+      { "input": { "s": "pwwkew" }, "expected": 3 }
+    ]
+  },
+  {
+    "title": "Group Anagrams Together",
+    "language": "Python",
+    "difficulty": "Intermediate",
+    "description": "Group an array of strings into anagrams.",
+    "starterCode": "def group_anagrams(strs):\n    # Your code here\n    pass",
+    "solution": "def group_anagrams(strs):\n    from collections import defaultdict\n    anagrams = defaultdict(list)\n    for s in strs:\n        key = ''.join(sorted(s))\n        anagrams[key].append(s)\n    return list(anagrams.values())",
+    "testCases": [
+      { "input": { "strs": ["eat", "tea", "tan", "ate", "nat", "bat"] }, "expected": [["eat", "tea", "ate"], ["tan", "nat"], ["bat"]] },
+      { "input": { "strs": [""] }, "expected": [[""]] },
+      { "input": { "strs": ["a"] }, "expected": [["a"]] }
+    ]
+  },
+  {
+    "title": "Container With Water",
+    "language": "Python",
+    "difficulty": "Intermediate",
+    "description": "Find two lines that together with x-axis form a container holding the most water.",
+    "starterCode": "def max_area(height):\n    # Your code here\n    pass",
+    "solution": "def max_area(height):\n    max_water = 0\n    left, right = 0, len(height) - 1\n    while left < right:\n        width = right - left\n        h = min(height[left], height[right])\n        max_water = max(max_water, width * h)\n        if height[left] < height[right]:\n            left += 1\n        else:\n            right -= 1\n    return max_water",
+    "testCases": [
+      { "input": { "height": [1, 8, 6, 2, 5, 4, 8, 3, 7] }, "expected": 49 },
+      { "input": { "height": [1, 1] }, "expected": 1 },
+      { "input": { "height": [4, 3, 2, 1, 4] }, "expected": 16 }
+    ]
+  },
+  {
+    "title": "Minimum Window Substring",
+    "language": "Python",
+    "difficulty": "Intermediate",
+    "description": "Find the minimum window substring in s that contains all characters of t.",
+    "starterCode": "def min_window(s, t):\n    # Your code here\n    pass",
+    "solution": "def min_window(s, t):\n    from collections import Counter\n    need = Counter(t)\n    window = {}\n    left = right = valid = 0\n    start, min_len = 0, float('inf')\n    while right < len(s):\n        c = s[right]\n        right += 1\n        if c in need:\n            window[c] = window.get(c, 0) + 1\n            if window[c] == need[c]:\n                valid += 1\n        while valid == len(need):\n            if right - left < min_len:\n                start = left\n                min_len = right - left\n            d = s[left]\n            left += 1\n            if d in need:\n                if window[d] == need[d]:\n                    valid -= 1\n                window[d] -= 1\n    return '' if min_len == float('inf') else s[start:start + min_len]",
+    "testCases": [
+      { "input": { "s": "ADOBECODEBANC", "t": "ABC" }, "expected": "BANC" },
+      { "input": { "s": "a", "t": "a" }, "expected": "a" },
+      { "input": { "s": "a", "t": "aa" }, "expected": "" }
+    ]
+  },
+  {
+    "title": "Three Sum Problem",
+    "language": "Python",
+    "difficulty": "Advanced",
+    "description": "Find all unique triplets in the array that sum to zero.",
+    "starterCode": "def three_sum(nums):\n    # Your code here\n    pass",
+    "solution": "def three_sum(nums):\n    nums.sort()\n    result = []\n    for i in range(len(nums) - 2):\n        if i > 0 and nums[i] == nums[i - 1]:\n            continue\n        left, right = i + 1, len(nums) - 1\n        while left < right:\n            total = nums[i] + nums[left] + nums[right]\n            if total == 0:\n                result.append([nums[i], nums[left], nums[right]])\n                while left < right and nums[left] == nums[left + 1]:\n                    left += 1\n                while left < right and nums[right] == nums[right - 1]:\n                    right -= 1\n                left += 1\n                right -= 1\n            elif total < 0:\n                left += 1\n            else:\n                right -= 1\n    return result",
+    "testCases": [
+      { "input": { "nums": [-1, 0, 1, 2, -1, -4] }, "expected": [[-1, -1, 2], [-1, 0, 1]] },
+      { "input": { "nums": [0, 1, 1] }, "expected": [] },
+      { "input": { "nums": [0, 0, 0] }, "expected": [[0, 0, 0]] }
+    ]
+  },
+  {
+    "title": "Longest Palindromic Substring",
+    "language": "Python",
+    "difficulty": "Advanced",
+    "description": "Find the longest palindromic substring in a given string.",
+    "starterCode": "def longest_palindrome(s):\n    # Your code here\n    pass",
+    "solution": "def longest_palindrome(s):\n    def expand_around_center(left, right):\n        while left >= 0 and right < len(s) and s[left] == s[right]:\n            left -= 1\n            right += 1\n        return right - left - 1\n    \n    start = max_len = 0\n    for i in range(len(s)):\n        len1 = expand_around_center(i, i)\n        len2 = expand_around_center(i, i + 1)\n        length = max(len1, len2)\n        if length > max_len:\n            max_len = length\n            start = i - (length - 1) // 2\n    return s[start:start + max_len]",
+    "testCases": [
+      { "input": { "s": "babad" }, "expected": "bab" },
+      { "input": { "s": "cbbd" }, "expected": "bb" },
+      { "input": { "s": "a" }, "expected": "a" }
+    ]
+  },
+  {
+    "title": "Trapping Rain Water",
+    "language": "Python",
+    "difficulty": "Advanced",
+    "description": "Calculate how much water can be trapped after raining given elevation map represented by an array.",
+    "starterCode": "def trap(height):\n    # Your code here\n    pass",
+    "solution": "def trap(height):\n    if not height:\n        return 0\n    left, right = 0, len(height) - 1\n    left_max = right_max = water = 0\n    while left < right:\n        if height[left] < height[right]:\n            if height[left] >= left_max:\n                left_max = height[left]\n            else:\n                water += left_max - height[left]\n            left += 1\n        else:\n            if height[right] >= right_max:\n                right_max = height[right]\n            else:\n                water += right_max - height[right]\n            right -= 1\n    return water",
+    "testCases": [
+      { "input": { "height": [0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1] }, "expected": 6 },
+      { "input": { "height": [4, 2, 0, 3, 2, 5] }, "expected": 9 },
+      { "input": { "height": [4, 2, 3] }, "expected": 1 }
+    ]
+  },
+  {
+    "title": "Two Sum Problem",
+    "language": "Go",
+    "difficulty": "Beginner",
+    "description": "Given an array of integers and a target sum, return indices of two numbers that add up to the target.",
+    "starterCode": "func twoSum(nums []int, target int) []int {\n    // Your code here\n    return nil\n}",
+    "solution": "func twoSum(nums []int, target int) []int {\n    seen := make(map[int]int)\n    for i, num := range nums {\n        complement := target - num\n        if idx, ok := seen[complement]; ok {\n            return []int{idx, i}\n        }\n        seen[num] = i\n    }\n    return nil\n}",
+    "testCases": [
+      { "input": { "nums": [2, 7, 11, 15], "target": 9 }, "expected": [0, 1] },
+      { "input": { "nums": [3, 2, 4], "target": 6 }, "expected": [1, 2] },
+      { "input": { "nums": [3, 3], "target": 6 }, "expected": [0, 1] }
+    ]
+  },
+  {
+    "title": "Valid Palindrome Check",
+    "language": "Go",
+    "difficulty": "Beginner",
+    "description": "Given a string, determine if it is a palindrome, considering only alphanumeric characters and ignoring case.",
+    "starterCode": "func isPalindrome(s string) bool {\n    // Your code here\n    return false\n}",
+    "solution": "func isPalindrome(s string) bool {\n    left, right := 0, len(s)-1\n    for left < right {\n        for left < right && !isAlphanumeric(s[left]) {\n            left++\n        }\n        for left < right && !isAlphanumeric(s[right]) {\n            right--\n        }\n        if toLower(s[left]) != toLower(s[right]) {\n            return false\n        }\n        left++\n        right--\n    }\n    return true\n}\n\nfunc isAlphanumeric(c byte) bool {\n    return (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || (c >= '0' && c <= '9')\n}\n\nfunc toLower(c byte) byte {\n    if c >= 'A' && c <= 'Z' {\n        return c + 32\n    }\n    return c\n}",
+    "testCases": [
+      { "input": { "s": "A man, a plan, a canal: Panama" }, "expected": true },
+      { "input": { "s": "race a car" }, "expected": false },
+      { "input": { "s": " " }, "expected": true }
+    ]
+  },
+  {
+    "title": "Remove Array Duplicates",
+    "language": "Go",
+    "difficulty": "Beginner",
+    "description": "Remove duplicates from a sorted array in-place and return the new length.",
+    "starterCode": "func removeDuplicates(nums []int) int {\n    // Your code here\n    return 0\n}",
+    "solution": "func removeDuplicates(nums []int) int {\n    if len(nums) == 0 {\n        return 0\n    }\n    i := 0\n    for j := 1; j < len(nums); j++ {\n        if nums[j] != nums[i] {\n            i++\n            nums[i] = nums[j]\n        }\n    }\n    return i + 1\n}",
+    "testCases": [
+      { "input": { "nums": [1, 1, 2] }, "expected": 2 },
+      { "input": { "nums": [0, 0, 1, 1, 1, 2, 2, 3, 3, 4] }, "expected": 5 },
+      { "input": { "nums": [1, 2, 3] }, "expected": 3 }
+    ]
+  },
+  {
+    "title": "Longest Substring Without Repeating",
+    "language": "Go",
+    "difficulty": "Intermediate",
+    "description": "Find the length of the longest substring without repeating characters.",
+    "starterCode": "func lengthOfLongestSubstring(s string) int {\n    // Your code here\n    return 0\n}",
+    "solution": "func lengthOfLongestSubstring(s string) int {\n    charMap := make(map[byte]int)\n    maxLen, left := 0, 0\n    for right := 0; right < len(s); right++ {\n        if idx, ok := charMap[s[right]]; ok {\n            if idx+1 > left {\n                left = idx + 1\n            }\n        }\n        charMap[s[right]] = right\n        if right-left+1 > maxLen {\n            maxLen = right - left + 1\n        }\n    }\n    return maxLen\n}",
+    "testCases": [
+      { "input": { "s": "abcabcbb" }, "expected": 3 },
+      { "input": { "s": "bbbbb" }, "expected": 1 },
+      { "input": { "s": "pwwkew" }, "expected": 3 }
+    ]
+  },
+  {
+    "title": "Group Anagrams Together",
+    "language": "Go",
+    "difficulty": "Intermediate",
+    "description": "Group an array of strings into anagrams.",
+    "starterCode": "func groupAnagrams(strs []string) [][]string {\n    // Your code here\n    return nil\n}",
+    "solution": "func groupAnagrams(strs []string) [][]string {\n    anagrams := make(map[string][]string)\n    for _, str := range strs {\n        key := sortString(str)\n        anagrams[key] = append(anagrams[key], str)\n    }\n    result := make([][]string, 0, len(anagrams))\n    for _, group := range anagrams {\n        result = append(result, group)\n    }\n    return result\n}\n\nfunc sortString(s string) string {\n    runes := []rune(s)\n    sort.Slice(runes, func(i, j int) bool { return runes[i] < runes[j] })\n    return string(runes)\n}",
+    "testCases": [
+      { "input": { "strs": ["eat", "tea", "tan", "ate", "nat", "bat"] }, "expected": [["eat", "tea", "ate"], ["tan", "nat"], ["bat"]] },
+      { "input": { "strs": [""] }, "expected": [[""]] },
+      { "input": { "strs": ["a"] }, "expected": [["a"]] }
+    ]
+  },
+  {
+    "title": "Container With Water",
+    "language": "Go",
+    "difficulty": "Intermediate",
+    "description": "Find two lines that together with x-axis form a container holding the most water.",
+    "starterCode": "func maxArea(height []int) int {\n    // Your code here\n    return 0\n}",
+    "solution": "func maxArea(height []int) int {\n    maxWater := 0\n    left, right := 0, len(height)-1\n    for left < right {\n        width := right - left\n        h := height[left]\n        if height[right] < h {\n            h = height[right]\n        }\n        area := width * h\n        if area > maxWater {\n            maxWater = area\n        }\n        if height[left] < height[right] {\n            left++\n        } else {\n            right--\n        }\n    }\n    return maxWater\n}",
+    "testCases": [
+      { "input": { "height": [1, 8, 6, 2, 5, 4, 8, 3, 7] }, "expected": 49 },
+      { "input": { "height": [1, 1] }, "expected": 1 },
+      { "input": { "height": [4, 3, 2, 1, 4] }, "expected": 16 }
+    ]
+  },
+  {
+    "title": "Minimum Window Substring",
+    "language": "Go",
+    "difficulty": "Intermediate",
+    "description": "Find the minimum window substring in s that contains all characters of t.",
+    "starterCode": "func minWindow(s string, t string) string {\n    // Your code here\n    return \"\"\n}",
+    "solution": "func minWindow(s string, t string) string {\n    need := make(map[byte]int)\n    for i := 0; i < len(t); i++ {\n        need[t[i]]++\n    }\n    window := make(map[byte]int)\n    left, right, valid := 0, 0, 0\n    start, minLen := 0, len(s)+1\n    for right < len(s) {\n        c := s[right]\n        right++\n        if _, ok := need[c]; ok {\n            window[c]++\n            if window[c] == need[c] {\n                valid++\n            }\n        }\n        for valid == len(need) {\n            if right-left < minLen {\n                start = left\n                minLen = right - left\n            }\n            d := s[left]\n            left++\n            if _, ok := need[d]; ok {\n                if window[d] == need[d] {\n                    valid--\n                }\n                window[d]--\n            }\n        }\n    }\n    if minLen == len(s)+1 {\n        return \"\"\n    }\n    return s[start : start+minLen]\n}",
+    "testCases": [
+      { "input": { "s": "ADOBECODEBANC", "t": "ABC" }, "expected": "BANC" },
+      { "input": { "s": "a", "t": "a" }, "expected": "a" },
+      { "input": { "s": "a", "t": "aa" }, "expected": "" }
+    ]
+  },
+  {
+    "title": "Three Sum Problem",
+    "language": "Go",
+    "difficulty": "Advanced",
+    "description": "Find all unique triplets in the array that sum to zero.",
+    "starterCode": "func threeSum(nums []int) [][]int {\n    // Your code here\n    return nil\n}",
+    "solution": "func threeSum(nums []int) [][]int {\n    sort.Ints(nums)\n    result := [][]int{}\n    for i := 0; i < len(nums)-2; i++ {\n        if i > 0 && nums[i] == nums[i-1] {\n            continue\n        }\n        left, right := i+1, len(nums)-1\n        for left < right {\n            sum := nums[i] + nums[left] + nums[right]\n            if sum == 0 {\n                result = append(result, []int{nums[i], nums[left], nums[right]})\n                for left < right && nums[left] == nums[left+1] {\n                    left++\n                }\n                for left < right && nums[right] == nums[right-1] {\n                    right--\n                }\n                left++\n                right--\n            } else if sum < 0 {\n                left++\n            } else {\n                right--\n            }\n        }\n    }\n    return result\n}",
+    "testCases": [
+      { "input": { "nums": [-1, 0, 1, 2, -1, -4] }, "expected": [[-1, -1, 2], [-1, 0, 1]] },
+      { "input": { "nums": [0, 1, 1] }, "expected": [] },
+      { "input": { "nums": [0, 0, 0] }, "expected": [[0, 0, 0]] }
+    ]
+  },
+  {
+    "title": "Longest Palindromic Substring",
+    "language": "Go",
+    "difficulty": "Advanced",
+    "description": "Find the longest palindromic substring in a given string.",
+    "starterCode": "func longestPalindrome(s string) string {\n    // Your code here\n    return \"\"\n}",
+    "solution": "func longestPalindrome(s string) string {\n    start, maxLen := 0, 0\n    expandAroundCenter := func(left, right int) int {\n        for left >= 0 && right < len(s) && s[left] == s[right] {\n            left--\n            right++\n        }\n        return right - left - 1\n    }\n    for i := 0; i < len(s); i++ {\n        len1 := expandAroundCenter(i, i)\n        len2 := expandAroundCenter(i, i+1)\n        length := len1\n        if len2 > length {\n            length = len2\n        }\n        if length > maxLen {\n            maxLen = length\n            start = i - (length-1)/2\n        }\n    }\n    return s[start : start+maxLen]\n}",
+    "testCases": [
+      { "input": { "s": "babad" }, "expected": "bab" },
+      { "input": { "s": "cbbd" }, "expected": "bb" },
+      { "input": { "s": "a" }, "expected": "a" }
+    ]
+  },
+  {
+    "title": "Trapping Rain Water",
+    "language": "Go",
+    "difficulty": "Advanced",
+    "description": "Calculate how much water can be trapped after raining given elevation map represented by an array.",
+    "starterCode": "func trap(height []int) int {\n    // Your code here\n    return 0\n}",
+    "solution": "func trap(height []int) int {\n    if len(height) == 0 {\n        return 0\n    }\n    left, right := 0, len(height)-1\n    leftMax, rightMax, water := 0, 0, 0\n    for left < right {\n        if height[left] < height[right] {\n            if height[left] >= leftMax {\n                leftMax = height[left]\n            } else {\n                water += leftMax - height[left]\n            }\n            left++\n        } else {\n            if height[right] >= rightMax {\n                rightMax = height[right]\n            } else {\n                water += rightMax - height[right]\n            }\n            right--\n        }\n    }\n    return water\n}",
+    "testCases": [
+      { "input": { "height": [0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1] }, "expected": 6 },
+      { "input": { "height": [4, 2, 0, 3, 2, 5] }, "expected": 9 },
+      { "input": { "height": [4, 2, 3] }, "expected": 1 }
+    ]
+  },
+  {
+    "title": "Two Sum Problem",
+    "language": "Java",
+    "difficulty": "Beginner",
+    "description": "Given an array of integers and a target sum, return indices of two numbers that add up to the target.",
+    "starterCode": "public int[] twoSum(int[] nums, int target) {\n    // Your code here\n    return new int[]{};\n}",
+    "solution": "public int[] twoSum(int[] nums, int target) {\n    Map<Integer, Integer> seen = new HashMap<>();\n    for (int i = 0; i < nums.length; i++) {\n        int complement = target - nums[i];\n        if (seen.containsKey(complement)) {\n            return new int[]{seen.get(complement), i};\n        }\n        seen.put(nums[i], i);\n    }\n    return new int[]{};\n}",
+    "testCases": [
+      { "input": { "nums": [2, 7, 11, 15], "target": 9 }, "expected": [0, 1] },
+      { "input": { "nums": [3, 2, 4], "target": 6 }, "expected": [1, 2] },
+      { "input": { "nums": [3, 3], "target": 6 }, "expected": [0, 1] }
+    ]
+  },
+  {
+    "title": "Valid Palindrome Check",
+    "language": "Java",
+    "difficulty": "Beginner",
+    "description": "Given a string, determine if it is a palindrome, considering only alphanumeric characters and ignoring case.",
+    "starterCode": "public boolean isPalindrome(String s) {\n    // Your code here\n    return false;\n}",
+    "solution": "public boolean isPalindrome(String s) {\n    int left = 0, right = s.length() - 1;\n    while (left < right) {\n        while (left < right && !Character.isLetterOrDigit(s.charAt(left))) {\n            left++;\n        }\n        while (left < right && !Character.isLetterOrDigit(s.charAt(right))) {\n            right--;\n        }\n        if (Character.toLowerCase(s.charAt(left)) != Character.toLowerCase(s.charAt(right))) {\n            return false;\n        }\n        left++;\n        right--;\n    }\n    return true;\n}",
+    "testCases": [
+      { "input": { "s": "A man, a plan, a canal: Panama" }, "expected": true },
+      { "input": { "s": "race a car" }, "expected": false },
+      { "input": { "s": " " }, "expected": true }
+    ]
+  },
+  {
+    "title": "Remove Array Duplicates",
+    "language": "Java",
+    "difficulty": "Beginner",
+    "description": "Remove duplicates from a sorted array in-place and return the new length.",
+    "starterCode": "public int removeDuplicates(int[] nums) {\n    // Your code here\n    return 0;\n}",
+    "solution": "public int removeDuplicates(int[] nums) {\n    if (nums.length == 0) return 0;\n    int i = 0;\n    for (int j = 1; j < nums.length; j++) {\n        if (nums[j] != nums[i]) {\n            i++;\n            nums[i] = nums[j];\n        }\n    }\n    return i + 1;\n}",
+    "testCases": [
+      { "input": { "nums": [1, 1, 2] }, "expected": 2 },
+      { "input": { "nums": [0, 0, 1, 1, 1, 2, 2, 3, 3, 4] }, "expected": 5 },
+      { "input": { "nums": [1, 2, 3] }, "expected": 3 }
+    ]
+  },
+  {
+    "title": "Longest Substring Without Repeating",
+    "language": "Java",
+    "difficulty": "Intermediate",
+    "description": "Find the length of the longest substring without repeating characters.",
+    "starterCode": "public int lengthOfLongestSubstring(String s) {\n    // Your code here\n    return 0;\n}",
+    "solution": "public int lengthOfLongestSubstring(String s) {\n    Map<Character, Integer> charMap = new HashMap<>();\n    int maxLen = 0, left = 0;\n    for (int right = 0; right < s.length(); right++) {\n        char c = s.charAt(right);\n        if (charMap.containsKey(c)) {\n            left = Math.max(charMap.get(c) + 1, left);\n        }\n        charMap.put(c, right);\n        maxLen = Math.max(maxLen, right - left + 1);\n    }\n    return maxLen;\n}",
+    "testCases": [
+      { "input": { "s": "abcabcbb" }, "expected": 3 },
+      { "input": { "s": "bbbbb" }, "expected": 1 },
+      { "input": { "s": "pwwkew" }, "expected": 3 }
+    ]
+  },
+  {
+    "title": "Group Anagrams Together",
+    "language": "Java",
+    "difficulty": "Intermediate",
+    "description": "Group an array of strings into anagrams.",
+    "starterCode": "public List<List<String>> groupAnagrams(String[] strs) {\n    // Your code here\n    return new ArrayList<>();\n}",
+    "solution": "public List<List<String>> groupAnagrams(String[] strs) {\n    Map<String, List<String>> anagrams = new HashMap<>();\n    for (String str : strs) {\n        char[] chars = str.toCharArray();\n        Arrays.sort(chars);\n        String key = new String(chars);\n        anagrams.computeIfAbsent(key, k -> new ArrayList<>()).add(str);\n    }\n    return new ArrayList<>(anagrams.values());\n}",
+    "testCases": [
+      { "input": { "strs": ["eat", "tea", "tan", "ate", "nat", "bat"] }, "expected": [["eat", "tea", "ate"], ["tan", "nat"], ["bat"]] },
+      { "input": { "strs": [""] }, "expected": [[""]] },
+      { "input": { "strs": ["a"] }, "expected": [["a"]] }
+    ]
+  },
+  {
+    "title": "Container With Water",
+    "language": "Java",
+    "difficulty": "Intermediate",
+    "description": "Find two lines that together with x-axis form a container holding the most water.",
+    "starterCode": "public int maxArea(int[] height) {\n    // Your code here\n    return 0;\n}",
+    "solution": "public int maxArea(int[] height) {\n    int maxWater = 0, left = 0, right = height.length - 1;\n    while (left < right) {\n        int width = right - left;\n        int h = Math.min(height[left], height[right]);\n        maxWater = Math.max(maxWater, width * h);\n        if (height[left] < height[right]) {\n            left++;\n        } else {\n            right--;\n        }\n    }\n    return maxWater;\n}",
+    "testCases": [
+      { "input": { "height": [1, 8, 6, 2, 5, 4, 8, 3, 7] }, "expected": 49 },
+      { "input": { "height": [1, 1] }, "expected": 1 },
+      { "input": { "height": [4, 3, 2, 1, 4] }, "expected": 16 }
+    ]
+  },
+  {
+    "title": "Minimum Window Substring",
+    "language": "Java",
+    "difficulty": "Intermediate",
+    "description": "Find the minimum window substring in s that contains all characters of t.",
+    "starterCode": "public String minWindow(String s, String t) {\n    // Your code here\n    return \"\";\n}",
+    "solution": "public String minWindow(String s, String t) {\n    Map<Character, Integer> need = new HashMap<>();\n    for (char c : t.toCharArray()) {\n        need.put(c, need.getOrDefault(c, 0) + 1);\n    }\n    Map<Character, Integer> window = new HashMap<>();\n    int left = 0, right = 0, valid = 0;\n    int start = 0, minLen = Integer.MAX_VALUE;\n    while (right < s.length()) {\n        char c = s.charAt(right);\n        right++;\n        if (need.containsKey(c)) {\n            window.put(c, window.getOrDefault(c, 0) + 1);\n            if (window.get(c).equals(need.get(c))) {\n                valid++;\n            }\n        }\n        while (valid == need.size()) {\n            if (right - left < minLen) {\n                start = left;\n                minLen = right - left;\n            }\n            char d = s.charAt(left);\n            left++;\n            if (need.containsKey(d)) {\n                if (window.get(d).equals(need.get(d))) {\n                    valid--;\n                }\n                window.put(d, window.get(d) - 1);\n            }\n        }\n    }\n    return minLen == Integer.MAX_VALUE ? \"\" : s.substring(start, start + minLen);\n}",
+    "testCases": [
+      { "input": { "s": "ADOBECODEBANC", "t": "ABC" }, "expected": "BANC" },
+      { "input": { "s": "a", "t": "a" }, "expected": "a" },
+      { "input": { "s": "a", "t": "aa" }, "expected": "" }
+    ]
+  },
+  {
+    "title": "Three Sum Problem",
+    "language": "Java",
+    "difficulty": "Advanced",
+    "description": "Find all unique triplets in the array that sum to zero.",
+    "starterCode": "public List<List<Integer>> threeSum(int[] nums) {\n    // Your code here\n    return new ArrayList<>();\n}",
+    "solution": "public List<List<Integer>> threeSum(int[] nums) {\n    Arrays.sort(nums);\n    List<List<Integer>> result = new ArrayList<>();\n    for (int i = 0; i < nums.length - 2; i++) {\n        if (i > 0 && nums[i] == nums[i - 1]) continue;\n        int left = i + 1, right = nums.length - 1;\n        while (left < right) {\n            int sum = nums[i] + nums[left] + nums[right];\n            if (sum == 0) {\n                result.add(Arrays.asList(nums[i], nums[left], nums[right]));\n                while (left < right && nums[left] == nums[left + 1]) left++;\n                while (left < right && nums[right] == nums[right - 1]) right--;\n                left++;\n                right--;\n            } else if (sum < 0) {\n                left++;\n            } else {\n                right--;\n            }\n        }\n    }\n    return result;\n}",
+    "testCases": [
+      { "input": { "nums": [-1, 0, 1, 2, -1, -4] }, "expected": [[-1, -1, 2], [-1, 0, 1]] },
+      { "input": { "nums": [0, 1, 1] }, "expected": [] },
+      { "input": { "nums": [0, 0, 0] }, "expected": [[0, 0, 0]] }
+    ]
+  },
+  {
+    "title": "Longest Palindromic Substring",
+    "language": "Java",
+    "difficulty": "Advanced",
+    "description": "Find the longest palindromic substring in a given string.",
+    "starterCode": "public String longestPalindrome(String s) {\n    // Your code here\n    return \"\";\n}",
+    "solution": "public String longestPalindrome(String s) {\n    int start = 0, maxLen = 0;\n    for (int i = 0; i < s.length(); i++) {\n        int len1 = expandAroundCenter(s, i, i);\n        int len2 = expandAroundCenter(s, i, i + 1);\n        int len = Math.max(len1, len2);\n        if (len > maxLen) {\n            maxLen = len;\n            start = i - (len - 1) / 2;\n        }\n    }\n    return s.substring(start, start + maxLen);\n}\n\nprivate int expandAroundCenter(String s, int left, int right) {\n    while (left >= 0 && right < s.length() && s.charAt(left) == s.charAt(right)) {\n        left--;\n        right++;\n    }\n    return right - left - 1;\n}",
+    "testCases": [
+      { "input": { "s": "babad" }, "expected": "bab" },
+      { "input": { "s": "cbbd" }, "expected": "bb" },
+      { "input": { "s": "a" }, "expected": "a" }
+    ]
+  },
+  {
+    "title": "Trapping Rain Water",
+    "language": "Java",
+    "difficulty": "Advanced",
+    "description": "Calculate how much water can be trapped after raining given elevation map represented by an array.",
+    "starterCode": "public int trap(int[] height) {\n    // Your code here\n    return 0;\n}",
+    "solution": "public int trap(int[] height) {\n    if (height.length == 0) return 0;\n    int left = 0, right = height.length - 1;\n    int leftMax = 0, rightMax = 0, water = 0;\n    while (left < right) {\n        if (height[left] < height[right]) {\n            if (height[left] >= leftMax) {\n                leftMax = height[left];\n            } else {\n                water += leftMax - height[left];\n            }\n            left++;\n        } else {\n            if (height[right] >= rightMax) {\n                rightMax = height[right];\n            } else {\n                water += rightMax - height[right];\n            }\n            right--;\n        }\n    }\n    return water;\n}",
+    "testCases": [
+      { "input": { "height": [0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1] }, "expected": 6 },
+      { "input": { "height": [4, 2, 0, 3, 2, 5] }, "expected": 9 },
+      { "input": { "height": [4, 2, 3] }, "expected": 1 }
+    ]
+  },
+  {
+    "title": "Two Sum Problem",
+    "language": "TypeScript",
+    "difficulty": "Beginner",
+    "description": "Given an array of integers and a target sum, return indices of two numbers that add up to the target.",
+    "starterCode": "function twoSum(nums: number[], target: number): number[] {\n  // Your code here\n  return [];\n}",
+    "solution": "function twoSum(nums: number[], target: number): number[] {\n  const map = new Map<number, number>();\n  for (let i = 0; i < nums.length; i++) {\n    const complement = target - nums[i];\n    if (map.has(complement)) {\n      return [map.get(complement)!, i];\n    }\n    map.set(nums[i], i);\n  }\n  return [];\n}",
+    "testCases": [
+      { "input": { "nums": [2, 7, 11, 15], "target": 9 }, "expected": [0, 1] },
+      { "input": { "nums": [3, 2, 4], "target": 6 }, "expected": [1, 2] },
+      { "input": { "nums": [3, 3], "target": 6 }, "expected": [0, 1] }
+    ]
+  },
+  {
+    "title": "Valid Palindrome Check",
+    "language": "TypeScript",
+    "difficulty": "Beginner",
+    "description": "Given a string, determine if it is a palindrome, considering only alphanumeric characters and ignoring case.",
+    "starterCode": "function isPalindrome(s: string): boolean {\n  // Your code here\n  return false;\n}",
+    "solution": "function isPalindrome(s: string): boolean {\n  const cleaned = s.toLowerCase().replace(/[^a-z0-9]/g, '');\n  let left = 0, right = cleaned.length - 1;\n  while (left < right) {\n    if (cleaned[left] !== cleaned[right]) return false;\n    left++;\n    right--;\n  }\n  return true;\n}",
+    "testCases": [
+      { "input": { "s": "A man, a plan, a canal: Panama" }, "expected": true },
+      { "input": { "s": "race a car" }, "expected": false },
+      { "input": { "s": " " }, "expected": true }
+    ]
+  },
+  {
+    "title": "Remove Array Duplicates",
+    "language": "TypeScript",
+    "difficulty": "Beginner",
+    "description": "Remove duplicates from a sorted array in-place and return the new length.",
+    "starterCode": "function removeDuplicates(nums: number[]): number {\n  // Your code here\n  return 0;\n}",
+    "solution": "function removeDuplicates(nums: number[]): number {\n  if (nums.length === 0) return 0;\n  let i = 0;\n  for (let j = 1; j < nums.length; j++) {\n    if (nums[j] !== nums[i]) {\n      i++;\n      nums[i] = nums[j];\n    }\n  }\n  return i + 1;\n}",
+    "testCases": [
+      { "input": { "nums": [1, 1, 2] }, "expected": 2 },
+      { "input": { "nums": [0, 0, 1, 1, 1, 2, 2, 3, 3, 4] }, "expected": 5 },
+      { "input": { "nums": [1, 2, 3] }, "expected": 3 }
+    ]
+  },
+  {
+    "title": "Longest Substring Without Repeating",
+    "language": "TypeScript",
+    "difficulty": "Intermediate",
+    "description": "Find the length of the longest substring without repeating characters.",
+    "starterCode": "function lengthOfLongestSubstring(s: string): number {\n  // Your code here\n  return 0;\n}",
+    "solution": "function lengthOfLongestSubstring(s: string): number {\n  const map = new Map<string, number>();\n  let maxLen = 0, left = 0;\n  for (let right = 0; right < s.length; right++) {\n    if (map.has(s[right])) {\n      left = Math.max(map.get(s[right])! + 1, left);\n    }\n    map.set(s[right], right);\n    maxLen = Math.max(maxLen, right - left + 1);\n  }\n  return maxLen;\n}",
+    "testCases": [
+      { "input": { "s": "abcabcbb" }, "expected": 3 },
+      { "input": { "s": "bbbbb" }, "expected": 1 },
+      { "input": { "s": "pwwkew" }, "expected": 3 }
+    ]
+  },
+  {
+    "title": "Group Anagrams Together",
+    "language": "TypeScript",
+    "difficulty": "Intermediate",
+    "description": "Group an array of strings into anagrams.",
+    "starterCode": "function groupAnagrams(strs: string[]): string[][] {\n  // Your code here\n  return [];\n}",
+    "solution": "function groupAnagrams(strs: string[]): string[][] {\n  const map = new Map<string, string[]>();\n  for (const str of strs) {\n    const key = str.split('').sort().join('');\n    if (!map.has(key)) map.set(key, []);\n    map.get(key)!.push(str);\n  }\n  return Array.from(map.values());\n}",
+    "testCases": [
+      { "input": { "strs": ["eat", "tea", "tan", "ate", "nat", "bat"] }, "expected": [["eat", "tea", "ate"], ["tan", "nat"], ["bat"]] },
+      { "input": { "strs": [""] }, "expected": [[""]] },
+      { "input": { "strs": ["a"] }, "expected": [["a"]] }
+    ]
+  },
+  {
+    "title": "Container With Water",
+    "language": "TypeScript",
+    "difficulty": "Intermediate",
+    "description": "Find two lines that together with x-axis form a container holding the most water.",
+    "starterCode": "function maxArea(height: number[]): number {\n  // Your code here\n  return 0;\n}",
+    "solution": "function maxArea(height: number[]): number {\n  let maxWater = 0, left = 0, right = height.length - 1;\n  while (left < right) {\n    const width = right - left;\n    const h = Math.min(height[left], height[right]);\n    maxWater = Math.max(maxWater, width * h);\n    if (height[left] < height[right]) left++;\n    else right--;\n  }\n  return maxWater;\n}",
+    "testCases": [
+      { "input": { "height": [1, 8, 6, 2, 5, 4, 8, 3, 7] }, "expected": 49 },
+      { "input": { "height": [1, 1] }, "expected": 1 },
+      { "input": { "height": [4, 3, 2, 1, 4] }, "expected": 16 }
+    ]
+  },
+  {
+    "title": "Minimum Window Substring",
+    "language": "TypeScript",
+    "difficulty": "Intermediate",
+    "description": "Find the minimum window substring in s that contains all characters of t.",
+    "starterCode": "function minWindow(s: string, t: string): string {\n  // Your code here\n  return '';\n}",
+    "solution": "function minWindow(s: string, t: string): string {\n  const need = new Map<string, number>();\n  for (const c of t) need.set(c, (need.get(c) || 0) + 1);\n  let left = 0, right = 0, valid = 0, start = 0, minLen = Infinity;\n  const window = new Map<string, number>();\n  while (right < s.length) {\n    const c = s[right];\n    right++;\n    if (need.has(c)) {\n      window.set(c, (window.get(c) || 0) + 1);\n      if (window.get(c) === need.get(c)) valid++;\n    }\n    while (valid === need.size) {\n      if (right - left < minLen) {\n        start = left;\n        minLen = right - left;\n      }\n      const d = s[left];\n      left++;\n      if (need.has(d)) {\n        if (window.get(d) === need.get(d)) valid--;\n        window.set(d, window.get(d)! - 1);\n      }\n    }\n  }\n  return minLen === Infinity ? '' : s.substring(start, start + minLen);\n}",
+    "testCases": [
+      { "input": { "s": "ADOBECODEBANC", "t": "ABC" }, "expected": "BANC" },
+      { "input": { "s": "a", "t": "a" }, "expected": "a" },
+      { "input": { "s": "a", "t": "aa" }, "expected": "" }
+    ]
+  },
+  {
+    "title": "Three Sum Problem",
+    "language": "TypeScript",
+    "difficulty": "Advanced",
+    "description": "Find all unique triplets in the array that sum to zero.",
+    "starterCode": "function threeSum(nums: number[]): number[][] {\n  // Your code here\n  return [];\n}",
+    "solution": "function threeSum(nums: number[]): number[][] {\n  nums.sort((a, b) => a - b);\n  const result: number[][] = [];\n  for (let i = 0; i < nums.length - 2; i++) {\n    if (i > 0 && nums[i] === nums[i - 1]) continue;\n    let left = i + 1, right = nums.length - 1;\n    while (left < right) {\n      const sum = nums[i] + nums[left] + nums[right];\n      if (sum === 0) {\n        result.push([nums[i], nums[left], nums[right]]);\n        while (left < right && nums[left] === nums[left + 1]) left++;\n        while (left < right && nums[right] === nums[right - 1]) right--;\n        left++;\n        right--;\n      } else if (sum < 0) left++;\n      else right--;\n    }\n  }\n  return result;\n}",
+    "testCases": [
+      { "input": { "nums": [-1, 0, 1, 2, -1, -4] }, "expected": [[-1, -1, 2], [-1, 0, 1]] },
+      { "input": { "nums": [0, 1, 1] }, "expected": [] },
+      { "input": { "nums": [0, 0, 0] }, "expected": [[0, 0, 0]] }
+    ]
+  },
+  {
+    "title": "Longest Palindromic Substring",
+    "language": "TypeScript",
+    "difficulty": "Advanced",
+    "description": "Find the longest palindromic substring in a given string.",
+    "starterCode": "function longestPalindrome(s: string): string {\n  // Your code here\n  return '';\n}",
+    "solution": "function longestPalindrome(s: string): string {\n  let start = 0, maxLen = 0;\n  const expandAroundCenter = (left: number, right: number): number => {\n    while (left >= 0 && right < s.length && s[left] === s[right]) {\n      left--;\n      right++;\n    }\n    return right - left - 1;\n  };\n  for (let i = 0; i < s.length; i++) {\n    const len1 = expandAroundCenter(i, i);\n    const len2 = expandAroundCenter(i, i + 1);\n    const len = Math.max(len1, len2);\n    if (len > maxLen) {\n      maxLen = len;\n      start = i - Math.floor((len - 1) / 2);\n    }\n  }\n  return s.substring(start, start + maxLen);\n}",
+    "testCases": [
+      { "input": { "s": "babad" }, "expected": "bab" },
+      { "input": { "s": "cbbd" }, "expected": "bb" },
+      { "input": { "s": "a" }, "expected": "a" }
+    ]
+  },
+  {
+    "title": "Trapping Rain Water",
+    "language": "TypeScript",
+    "difficulty": "Advanced",
+    "description": "Calculate how much water can be trapped after raining given elevation map represented by an array.",
+    "starterCode": "function trap(height: number[]): number {\n  // Your code here\n  return 0;\n}",
+    "solution": "function trap(height: number[]): number {\n  if (height.length === 0) return 0;\n  let left = 0, right = height.length - 1;\n  let leftMax = 0, rightMax = 0, water = 0;\n  while (left < right) {\n    if (height[left] < height[right]) {\n      if (height[left] >= leftMax) leftMax = height[left];\n      else water += leftMax - height[left];\n      left++;\n    } else {\n      if (height[right] >= rightMax) rightMax = height[right];\n      else water += rightMax - height[right];\n      right--;\n    }\n  }\n  return water;\n}",
+    "testCases": [
+      { "input": { "height": [0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1] }, "expected": 6 },
+      { "input": { "height": [4, 2, 0, 3, 2, 5] }, "expected": 9 },
+      { "input": { "height": [4, 2, 3] }, "expected": 1 }
+    ]
+  },
+  {
+    "title": "Two Sum Problem",
+    "language": "C++",
+    "difficulty": "Beginner",
+    "description": "Given an array of integers and a target sum, return indices of two numbers that add up to the target.",
+    "starterCode": "vector<int> twoSum(vector<int>& nums, int target) {\n    // Your code here\n    return {};\n}",
+    "solution": "vector<int> twoSum(vector<int>& nums, int target) {\n    unordered_map<int, int> seen;\n    for (int i = 0; i < nums.size(); i++) {\n        int complement = target - nums[i];\n        if (seen.find(complement) != seen.end()) {\n            return {seen[complement], i};\n        }\n        seen[nums[i]] = i;\n    }\n    return {};\n}",
+    "testCases": [
+      { "input": { "nums": [2, 7, 11, 15], "target": 9 }, "expected": [0, 1] },
+      { "input": { "nums": [3, 2, 4], "target": 6 }, "expected": [1, 2] },
+      { "input": { "nums": [3, 3], "target": 6 }, "expected": [0, 1] }
+    ]
+  },
+  {
+    "title": "Valid Palindrome Check",
+    "language": "C++",
+    "difficulty": "Beginner",
+    "description": "Given a string, determine if it is a palindrome, considering only alphanumeric characters and ignoring case.",
+    "starterCode": "bool isPalindrome(string s) {\n    // Your code here\n    return false;\n}",
+    "solution": "bool isPalindrome(string s) {\n    int left = 0, right = s.length() - 1;\n    while (left < right) {\n        while (left < right && !isalnum(s[left])) left++;\n        while (left < right && !isalnum(s[right])) right--;\n        if (tolower(s[left]) != tolower(s[right])) return false;\n        left++;\n        right--;\n    }\n    return true;\n}",
+    "testCases": [
+      { "input": { "s": "A man, a plan, a canal: Panama" }, "expected": true },
+      { "input": { "s": "race a car" }, "expected": false },
+      { "input": { "s": " " }, "expected": true }
+    ]
+  },
+  {
+    "title": "Remove Array Duplicates",
+    "language": "C++",
+    "difficulty": "Beginner",
+    "description": "Remove duplicates from a sorted array in-place and return the new length.",
+    "starterCode": "int removeDuplicates(vector<int>& nums) {\n    // Your code here\n    return 0;\n}",
+    "solution": "int removeDuplicates(vector<int>& nums) {\n    if (nums.empty()) return 0;\n    int i = 0;\n    for (int j = 1; j < nums.size(); j++) {\n        if (nums[j] != nums[i]) {\n            i++;\n            nums[i] = nums[j];\n        }\n    }\n    return i + 1;\n}",
+    "testCases": [
+      { "input": { "nums": [1, 1, 2] }, "expected": 2 },
+      { "input": { "nums": [0, 0, 1, 1, 1, 2, 2, 3, 3, 4] }, "expected": 5 },
+      { "input": { "nums": [1, 2, 3] }, "expected": 3 }
+    ]
+  },
+  {
+    "title": "Longest Substring Without Repeating",
+    "language": "C++",
+    "difficulty": "Intermediate",
+    "description": "Find the length of the longest substring without repeating characters.",
+    "starterCode": "int lengthOfLongestSubstring(string s) {\n    // Your code here\n    return 0;\n}",
+    "solution": "int lengthOfLongestSubstring(string s) {\n    unordered_map<char, int> charMap;\n    int maxLen = 0, left = 0;\n    for (int right = 0; right < s.length(); right++) {\n        if (charMap.find(s[right]) != charMap.end()) {\n            left = max(charMap[s[right]] + 1, left);\n        }\n        charMap[s[right]] = right;\n        maxLen = max(maxLen, right - left + 1);\n    }\n    return maxLen;\n}",
+    "testCases": [
+      { "input": { "s": "abcabcbb" }, "expected": 3 },
+      { "input": { "s": "bbbbb" }, "expected": 1 },
+      { "input": { "s": "pwwkew" }, "expected": 3 }
+    ]
+  },
+  {
+    "title": "Group Anagrams Together",
+    "language": "C++",
+    "difficulty": "Intermediate",
+    "description": "Group an array of strings into anagrams.",
+    "starterCode": "vector<vector<string>> groupAnagrams(vector<string>& strs) {\n    // Your code here\n    return {};\n}",
+    "solution": "vector<vector<string>> groupAnagrams(vector<string>& strs) {\n    unordered_map<string, vector<string>> anagrams;\n    for (const string& str : strs) {\n        string key = str;\n        sort(key.begin(), key.end());\n        anagrams[key].push_back(str);\n    }\n    vector<vector<string>> result;\n    for (auto& pair : anagrams) {\n        result.push_back(pair.second);\n    }\n    return result;\n}",
+    "testCases": [
+      { "input": { "strs": ["eat", "tea", "tan", "ate", "nat", "bat"] }, "expected": [["eat", "tea", "ate"], ["tan", "nat"], ["bat"]] },
+      { "input": { "strs": [""] }, "expected": [[""]] },
+      { "input": { "strs": ["a"] }, "expected": [["a"]] }
+    ]
+  },
+  {
+    "title": "Container With Water",
+    "language": "C++",
+    "difficulty": "Intermediate",
+    "description": "Find two lines that together with x-axis form a container holding the most water.",
+    "starterCode": "int maxArea(vector<int>& height) {\n    // Your code here\n    return 0;\n}",
+    "solution": "int maxArea(vector<int>& height) {\n    int maxWater = 0, left = 0, right = height.size() - 1;\n    while (left < right) {\n        int width = right - left;\n        int h = min(height[left], height[right]);\n        maxWater = max(maxWater, width * h);\n        if (height[left] < height[right]) left++;\n        else right--;\n    }\n    return maxWater;\n}",
+    "testCases": [
+      { "input": { "height": [1, 8, 6, 2, 5, 4, 8, 3, 7] }, "expected": 49 },
+      { "input": { "height": [1, 1] }, "expected": 1 },
+      { "input": { "height": [4, 3, 2, 1, 4] }, "expected": 16 }
+    ]
+  },
+  {
+    "title": "Minimum Window Substring",
+    "language": "C++",
+    "difficulty": "Intermediate",
+    "description": "Find the minimum window substring in s that contains all characters of t.",
+    "starterCode": "string minWindow(string s, string t) {\n    // Your code here\n    return \"\";\n}",
+    "solution": "string minWindow(string s, string t) {\n    unordered_map<char, int> need, window;\n    for (char c : t) need[c]++;\n    int left = 0, right = 0, valid = 0;\n    int start = 0, minLen = INT_MAX;\n    while (right < s.length()) {\n        char c = s[right];\n        right++;\n        if (need.count(c)) {\n            window[c]++;\n            if (window[c] == need[c]) valid++;\n        }\n        while (valid == need.size()) {\n            if (right - left < minLen) {\n                start = left;\n                minLen = right - left;\n            }\n            char d = s[left];\n            left++;\n            if (need.count(d)) {\n                if (window[d] == need[d]) valid--;\n                window[d]--;\n            }\n        }\n    }\n    return minLen == INT_MAX ? \"\" : s.substr(start, minLen);\n}",
+    "testCases": [
+      { "input": { "s": "ADOBECODEBANC", "t": "ABC" }, "expected": "BANC" },
+      { "input": { "s": "a", "t": "a" }, "expected": "a" },
+      { "input": { "s": "a", "t": "aa" }, "expected": "" }
+    ]
+  },
+  {
+    "title": "Three Sum Problem",
+    "language": "C++",
+    "difficulty": "Advanced",
+    "description": "Find all unique triplets in the array that sum to zero.",
+    "starterCode": "vector<vector<int>> threeSum(vector<int>& nums) {\n    // Your code here\n    return {};\n}",
+    "solution": "vector<vector<int>> threeSum(vector<int>& nums) {\n    sort(nums.begin(), nums.end());\n    vector<vector<int>> result;\n    for (int i = 0; i < nums.size() - 2; i++) {\n        if (i > 0 && nums[i] == nums[i - 1]) continue;\n        int left = i + 1, right = nums.size() - 1;\n        while (left < right) {\n            int sum = nums[i] + nums[left] + nums[right];\n            if (sum == 0) {\n                result.push_back({nums[i], nums[left], nums[right]});\n                while (left < right && nums[left] == nums[left + 1]) left++;\n                while (left < right && nums[right] == nums[right - 1]) right--;\n                left++;\n                right--;\n            } else if (sum < 0) left++;\n            else right--;\n        }\n    }\n    return result;\n}",
+    "testCases": [
+      { "input": { "nums": [-1, 0, 1, 2, -1, -4] }, "expected": [[-1, -1, 2], [-1, 0, 1]] },
+      { "input": { "nums": [0, 1, 1] }, "expected": [] },
+      { "input": { "nums": [0, 0, 0] }, "expected": [[0, 0, 0]] }
+    ]
+  },
+  {
+    "title": "Longest Palindromic Substring",
+    "language": "C++",
+    "difficulty": "Advanced",
+    "description": "Find the longest palindromic substring in a given string.",
+    "starterCode": "string longestPalindrome(string s) {\n    // Your code here\n    return \"\";\n}",
+    "solution": "string longestPalindrome(string s) {\n    int start = 0, maxLen = 0;\n    auto expandAroundCenter = [&](int left, int right) {\n        while (left >= 0 && right < s.length() && s[left] == s[right]) {\n            left--;\n            right++;\n        }\n        return right - left - 1;\n    };\n    for (int i = 0; i < s.length(); i++) {\n        int len1 = expandAroundCenter(i, i);\n        int len2 = expandAroundCenter(i, i + 1);\n        int len = max(len1, len2);\n        if (len > maxLen) {\n            maxLen = len;\n            start = i - (len - 1) / 2;\n        }\n    }\n    return s.substr(start, maxLen);\n}",
+    "testCases": [
+      { "input": { "s": "babad" }, "expected": "bab" },
+      { "input": { "s": "cbbd" }, "expected": "bb" },
+      { "input": { "s": "a" }, "expected": "a" }
+    ]
+  },
+  {
+    "title": "Trapping Rain Water",
+    "language": "C++",
+    "difficulty": "Advanced",
+    "description": "Calculate how much water can be trapped after raining given elevation map represented by an array.",
+    "starterCode": "int trap(vector<int>& height) {\n    // Your code here\n    return 0;\n}",
+    "solution": "int trap(vector<int>& height) {\n    if (height.empty()) return 0;\n    int left = 0, right = height.size() - 1;\n    int leftMax = 0, rightMax = 0, water = 0;\n    while (left < right) {\n        if (height[left] < height[right]) {\n            if (height[left] >= leftMax) leftMax = height[left];\n            else water += leftMax - height[left];\n            left++;\n        } else {\n            if (height[right] >= rightMax) rightMax = height[right];\n            else water += rightMax - height[right];\n            right--;\n        }\n    }\n    return water;\n}",
+    "testCases": [
+      { "input": { "height": [0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1] }, "expected": 6 },
+      { "input": { "height": [4, 2, 0, 3, 2, 5] }, "expected": 9 },
+      { "input": { "height": [4, 2, 3] }, "expected": 1 }
+    ]
+  },
+  {
+    "title": "Two Sum Problem",
+    "language": "C#",
+    "difficulty": "Beginner",
+    "description": "Given an array of integers and a target sum, return indices of two numbers that add up to the target.",
+    "starterCode": "public int[] TwoSum(int[] nums, int target) {\n    // Your code here\n    return new int[]{};\n}",
+    "solution": "public int[] TwoSum(int[] nums, int target) {\n    Dictionary<int, int> seen = new Dictionary<int, int>();\n    for (int i = 0; i < nums.Length; i++) {\n        int complement = target - nums[i];\n        if (seen.ContainsKey(complement)) {\n            return new int[] { seen[complement], i };\n        }\n        seen[nums[i]] = i;\n    }\n    return new int[]{};\n}",
+    "testCases": [
+      { "input": { "nums": [2, 7, 11, 15], "target": 9 }, "expected": [0, 1] },
+      { "input": { "nums": [3, 2, 4], "target": 6 }, "expected": [1, 2] },
+      { "input": { "nums": [3, 3], "target": 6 }, "expected": [0, 1] }
+    ]
+  },
+  {
+    "title": "Valid Palindrome Check",
+    "language": "C#",
+    "difficulty": "Beginner",
+    "description": "Given a string, determine if it is a palindrome, considering only alphanumeric characters and ignoring case.",
+    "starterCode": "public bool IsPalindrome(string s) {\n    // Your code here\n    return false;\n}",
+    "solution": "public bool IsPalindrome(string s) {\n    int left = 0, right = s.Length - 1;\n    while (left < right) {\n        while (left < right && !char.IsLetterOrDigit(s[left])) left++;\n        while (left < right && !char.IsLetterOrDigit(s[right])) right--;\n        if (char.ToLower(s[left]) != char.ToLower(s[right])) return false;\n        left++;\n        right--;\n    }\n    return true;\n}",
+    "testCases": [
+      { "input": { "s": "A man, a plan, a canal: Panama" }, "expected": true },
+      { "input": { "s": "race a car" }, "expected": false },
+      { "input": { "s": " " }, "expected": true }
+    ]
+  },
+  {
+    "title": "Remove Array Duplicates",
+    "language": "C#",
+    "difficulty": "Beginner",
+    "description": "Remove duplicates from a sorted array in-place and return the new length.",
+    "starterCode": "public int RemoveDuplicates(int[] nums) {\n    // Your code here\n    return 0;\n}",
+    "solution": "public int RemoveDuplicates(int[] nums) {\n    if (nums.Length == 0) return 0;\n    int i = 0;\n    for (int j = 1; j < nums.Length; j++) {\n        if (nums[j] != nums[i]) {\n            i++;\n            nums[i] = nums[j];\n        }\n    }\n    return i + 1;\n}",
+    "testCases": [
+      { "input": { "nums": [1, 1, 2] }, "expected": 2 },
+      { "input": { "nums": [0, 0, 1, 1, 1, 2, 2, 3, 3, 4] }, "expected": 5 },
+      { "input": { "nums": [1, 2, 3] }, "expected": 3 }
+    ]
+  },
+  {
+    "title": "Longest Substring Without Repeating",
+    "language": "C#",
+    "difficulty": "Intermediate",
+    "description": "Find the length of the longest substring without repeating characters.",
+    "starterCode": "public int LengthOfLongestSubstring(string s) {\n    // Your code here\n    return 0;\n}",
+    "solution": "public int LengthOfLongestSubstring(string s) {\n    Dictionary<char, int> charMap = new Dictionary<char, int>();\n    int maxLen = 0, left = 0;\n    for (int right = 0; right < s.Length; right++) {\n        if (charMap.ContainsKey(s[right])) {\n            left = Math.Max(charMap[s[right]] + 1, left);\n        }\n        charMap[s[right]] = right;\n        maxLen = Math.Max(maxLen, right - left + 1);\n    }\n    return maxLen;\n}",
+    "testCases": [
+      { "input": { "s": "abcabcbb" }, "expected": 3 },
+      { "input": { "s": "bbbbb" }, "expected": 1 },
+      { "input": { "s": "pwwkew" }, "expected": 3 }
+    ]
+  },
+  {
+    "title": "Group Anagrams Together",
+    "language": "C#",
+    "difficulty": "Intermediate",
+    "description": "Group an array of strings into anagrams.",
+    "starterCode": "public IList<IList<string>> GroupAnagrams(string[] strs) {\n    // Your code here\n    return new List<IList<string>>();\n}",
+    "solution": "public IList<IList<string>> GroupAnagrams(string[] strs) {\n    Dictionary<string, List<string>> anagrams = new Dictionary<string, List<string>>();\n    foreach (string str in strs) {\n        char[] chars = str.ToCharArray();\n        Array.Sort(chars);\n        string key = new string(chars);\n        if (!anagrams.ContainsKey(key)) {\n            anagrams[key] = new List<string>();\n        }\n        anagrams[key].Add(str);\n    }\n    return new List<IList<string>>(anagrams.Values);\n}",
+    "testCases": [
+      { "input": { "strs": ["eat", "tea", "tan", "ate", "nat", "bat"] }, "expected": [["eat", "tea", "ate"], ["tan", "nat"], ["bat"]] },
+      { "input": { "strs": [""] }, "expected": [[""]] },
+      { "input": { "strs": ["a"] }, "expected": [["a"]] }
+    ]
+  },
+  {
+    "title": "Container With Water",
+    "language": "C#",
+    "difficulty": "Intermediate",
+    "description": "Find two lines that together with x-axis form a container holding the most water.",
+    "starterCode": "public int MaxArea(int[] height) {\n    // Your code here\n    return 0;\n}",
+    "solution": "public int MaxArea(int[] height) {\n    int maxWater = 0, left = 0, right = height.Length - 1;\n    while (left < right) {\n        int width = right - left;\n        int h = Math.Min(height[left], height[right]);\n        maxWater = Math.Max(maxWater, width * h);\n        if (height[left] < height[right]) left++;\n        else right--;\n    }\n    return maxWater;\n}",
+    "testCases": [
+      { "input": { "height": [1, 8, 6, 2, 5, 4, 8, 3, 7] }, "expected": 49 },
+      { "input": { "height": [1, 1] }, "expected": 1 },
+      { "input": { "height": [4, 3, 2, 1, 4] }, "expected": 16 }
+    ]
+  },
+  {
+    "title": "Minimum Window Substring",
+    "language": "C#",
+    "difficulty": "Intermediate",
+    "description": "Find the minimum window substring in s that contains all characters of t.",
+    "starterCode": "public string MinWindow(string s, string t) {\n    // Your code here\n    return \"\";\n}",
+    "solution": "public string MinWindow(string s, string t) {\n    Dictionary<char, int> need = new Dictionary<char, int>();\n    foreach (char c in t) {\n        need[c] = need.ContainsKey(c) ? need[c] + 1 : 1;\n    }\n    Dictionary<char, int> window = new Dictionary<char, int>();\n    int left = 0, right = 0, valid = 0;\n    int start = 0, minLen = int.MaxValue;\n    while (right < s.Length) {\n        char c = s[right];\n        right++;\n        if (need.ContainsKey(c)) {\n            window[c] = window.ContainsKey(c) ? window[c] + 1 : 1;\n            if (window[c] == need[c]) valid++;\n        }\n        while (valid == need.Count) {\n            if (right - left < minLen) {\n                start = left;\n                minLen = right - left;\n            }\n            char d = s[left];\n            left++;\n            if (need.ContainsKey(d)) {\n                if (window[d] == need[d]) valid--;\n                window[d]--;\n            }\n        }\n    }\n    return minLen == int.MaxValue ? \"\" : s.Substring(start, minLen);\n}",
+    "testCases": [
+      { "input": { "s": "ADOBECODEBANC", "t": "ABC" }, "expected": "BANC" },
+      { "input": { "s": "a", "t": "a" }, "expected": "a" },
+      { "input": { "s": "a", "t": "aa" }, "expected": "" }
+    ]
+  },
+  {
+    "title": "Three Sum Problem",
+    "language": "C#",
+    "difficulty": "Advanced",
+    "description": "Find all unique triplets in the array that sum to zero.",
+    "starterCode": "public IList<IList<int>> ThreeSum(int[] nums) {\n    // Your code here\n    return new List<IList<int>>();\n}",
+    "solution": "public IList<IList<int>> ThreeSum(int[] nums) {\n    Array.Sort(nums);\n    IList<IList<int>> result = new List<IList<int>>();\n    for (int i = 0; i < nums.Length - 2; i++) {\n        if (i > 0 && nums[i] == nums[i - 1]) continue;\n        int left = i + 1, right = nums.Length - 1;\n        while (left < right) {\n            int sum = nums[i] + nums[left] + nums[right];\n            if (sum == 0) {\n                result.Add(new List<int> { nums[i], nums[left], nums[right] });\n                while (left < right && nums[left] == nums[left + 1]) left++;\n                while (left < right && nums[right] == nums[right - 1]) right--;\n                left++;\n                right--;\n            } else if (sum < 0) left++;\n            else right--;\n        }\n    }\n    return result;\n}",
+    "testCases": [
+      { "input": { "nums": [-1, 0, 1, 2, -1, -4] }, "expected": [[-1, -1, 2], [-1, 0, 1]] },
+      { "input": { "nums": [0, 1, 1] }, "expected": [] },
+      { "input": { "nums": [0, 0, 0] }, "expected": [[0, 0, 0]] }
+    ]
+  },
+  {
+    "title": "Longest Palindromic Substring",
+    "language": "C#",
+    "difficulty": "Advanced",
+    "description": "Find the longest palindromic substring in a given string.",
+    "starterCode": "public string LongestPalindrome(string s) {\n    // Your code here\n    return \"\";\n}",
+    "solution": "public string LongestPalindrome(string s) {\n    int start = 0, maxLen = 0;\n    for (int i = 0; i < s.Length; i++) {\n        int len1 = ExpandAroundCenter(s, i, i);\n        int len2 = ExpandAroundCenter(s, i, i + 1);\n        int len = Math.Max(len1, len2);\n        if (len > maxLen) {\n            maxLen = len;\n            start = i - (len - 1) / 2;\n        }\n    }\n    return s.Substring(start, maxLen);\n}\n\nprivate int ExpandAroundCenter(string s, int left, int right) {\n    while (left >= 0 && right < s.Length && s[left] == s[right]) {\n        left--;\n        right++;\n    }\n    return right - left - 1;\n}",
+    "testCases": [
+      { "input": { "s": "babad" }, "expected": "bab" },
+      { "input": { "s": "cbbd" }, "expected": "bb" },
+      { "input": { "s": "a" }, "expected": "a" }
+    ]
+  },
+  {
+    "title": "Trapping Rain Water",
+    "language": "C#",
+    "difficulty": "Advanced",
+    "description": "Calculate how much water can be trapped after raining given elevation map represented by an array.",
+    "starterCode": "public int Trap(int[] height) {\n    // Your code here\n    return 0;\n}",
+    "solution": "public int Trap(int[] height) {\n    if (height.Length == 0) return 0;\n    int left = 0, right = height.Length - 1;\n    int leftMax = 0, rightMax = 0, water = 0;\n    while (left < right) {\n        if (height[left] < height[right]) {\n            if (height[left] >= leftMax) leftMax = height[left];\n            else water += leftMax - height[left];\n            left++;\n        } else {\n            if (height[right] >= rightMax) rightMax = height[right];\n            else water += rightMax - height[right];\n            right--;\n        }\n    }\n    return water;\n}",
+    "testCases": [
+      { "input": { "height": [0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1] }, "expected": 6 },
+      { "input": { "height": [4, 2, 0, 3, 2, 5] }, "expected": 9 },
+      { "input": { "height": [4, 2, 3] }, "expected": 1 }
+    ]
+  },
+  {
+    "title": "Two Sum Problem",
+    "language": "Rust",
+    "difficulty": "Beginner",
+    "description": "Given an array of integers and a target sum, return indices of two numbers that add up to the target.",
+    "starterCode": "fn two_sum(nums: Vec<i32>, target: i32) -> Vec<i32> {\n    // Your code here\n    vec![]\n}",
+    "solution": "fn two_sum(nums: Vec<i32>, target: i32) -> Vec<i32> {\n    use std::collections::HashMap;\n    let mut seen = HashMap::new();\n    for (i, &num) in nums.iter().enumerate() {\n        let complement = target - num;\n        if let Some(&idx) = seen.get(&complement) {\n            return vec![idx as i32, i as i32];\n        }\n        seen.insert(num, i);\n    }\n    vec![]\n}",
+    "testCases": [
+      { "input": { "nums": [2, 7, 11, 15], "target": 9 }, "expected": [0, 1] },
+      { "input": { "nums": [3, 2, 4], "target": 6 }, "expected": [1, 2] },
+      { "input": { "nums": [3, 3], "target": 6 }, "expected": [0, 1] }
+    ]
+  },
+  {
+    "title": "Valid Palindrome Check",
+    "language": "Rust",
+    "difficulty": "Beginner",
+    "description": "Given a string, determine if it is a palindrome, considering only alphanumeric characters and ignoring case.",
+    "starterCode": "fn is_palindrome(s: String) -> bool {\n    // Your code here\n    false\n}",
+    "solution": "fn is_palindrome(s: String) -> bool {\n    let chars: Vec<char> = s.chars()\n        .filter(|c| c.is_alphanumeric())\n        .map(|c| c.to_lowercase().next().unwrap())\n        .collect();\n    let mut left = 0;\n    let mut right = chars.len().saturating_sub(1);\n    while left < right {\n        if chars[left] != chars[right] {\n            return false;\n        }\n        left += 1;\n        right -= 1;\n    }\n    true\n}",
+    "testCases": [
+      { "input": { "s": "A man, a plan, a canal: Panama" }, "expected": true },
+      { "input": { "s": "race a car" }, "expected": false },
+      { "input": { "s": " " }, "expected": true }
+    ]
+  },
+  {
+    "title": "Remove Array Duplicates",
+    "language": "Rust",
+    "difficulty": "Beginner",
+    "description": "Remove duplicates from a sorted array in-place and return the new length.",
+    "starterCode": "fn remove_duplicates(nums: &mut Vec<i32>) -> i32 {\n    // Your code here\n    0\n}",
+    "solution": "fn remove_duplicates(nums: &mut Vec<i32>) -> i32 {\n    if nums.is_empty() {\n        return 0;\n    }\n    let mut i = 0;\n    for j in 1..nums.len() {\n        if nums[j] != nums[i] {\n            i += 1;\n            nums[i] = nums[j];\n        }\n    }\n    (i + 1) as i32\n}",
+    "testCases": [
+      { "input": { "nums": [1, 1, 2] }, "expected": 2 },
+      { "input": { "nums": [0, 0, 1, 1, 1, 2, 2, 3, 3, 4] }, "expected": 5 },
+      { "input": { "nums": [1, 2, 3] }, "expected": 3 }
+    ]
+  },
+  {
+    "title": "Longest Substring Without Repeating",
+    "language": "Rust",
+    "difficulty": "Intermediate",
+    "description": "Find the length of the longest substring without repeating characters.",
+    "starterCode": "fn length_of_longest_substring(s: String) -> i32 {\n    // Your code here\n    0\n}",
+    "solution": "fn length_of_longest_substring(s: String) -> i32 {\n    use std::collections::HashMap;\n    let mut char_map = HashMap::new();\n    let mut max_len = 0;\n    let mut left = 0;\n    let chars: Vec<char> = s.chars().collect();\n    for (right, &ch) in chars.iter().enumerate() {\n        if let Some(&idx) = char_map.get(&ch) {\n            left = left.max(idx + 1);\n        }\n        char_map.insert(ch, right);\n        max_len = max_len.max(right - left + 1);\n    }\n    max_len as i32\n}",
+    "testCases": [
+      { "input": { "s": "abcabcbb" }, "expected": 3 },
+      { "input": { "s": "bbbbb" }, "expected": 1 },
+      { "input": { "s": "pwwkew" }, "expected": 3 }
+    ]
+  },
+  {
+    "title": "Group Anagrams Together",
+    "language": "Rust",
+    "difficulty": "Intermediate",
+    "description": "Group an array of strings into anagrams.",
+    "starterCode": "fn group_anagrams(strs: Vec<String>) -> Vec<Vec<String>> {\n    // Your code here\n    vec![]\n}",
+    "solution": "fn group_anagrams(strs: Vec<String>) -> Vec<Vec<String>> {\n    use std::collections::HashMap;\n    let mut anagrams: HashMap<String, Vec<String>> = HashMap::new();\n    for s in strs {\n        let mut chars: Vec<char> = s.chars().collect();\n        chars.sort_unstable();\n        let key: String = chars.into_iter().collect();\n        anagrams.entry(key).or_insert_with(Vec::new).push(s);\n    }\n    anagrams.into_values().collect()\n}",
+    "testCases": [
+      { "input": { "strs": ["eat", "tea", "tan", "ate", "nat", "bat"] }, "expected": [["eat", "tea", "ate"], ["tan", "nat"], ["bat"]] },
+      { "input": { "strs": [""] }, "expected": [[""]] },
+      { "input": { "strs": ["a"] }, "expected": [["a"]] }
+    ]
+  },
+  {
+    "title": "Container With Water",
+    "language": "Rust",
+    "difficulty": "Intermediate",
+    "description": "Find two lines that together with x-axis form a container holding the most water.",
+    "starterCode": "fn max_area(height: Vec<i32>) -> i32 {\n    // Your code here\n    0\n}",
+    "solution": "fn max_area(height: Vec<i32>) -> i32 {\n    let mut max_water = 0;\n    let mut left = 0;\n    let mut right = height.len() - 1;\n    while left < right {\n        let width = (right - left) as i32;\n        let h = height[left].min(height[right]);\n        max_water = max_water.max(width * h);\n        if height[left] < height[right] {\n            left += 1;\n        } else {\n            right -= 1;\n        }\n    }\n    max_water\n}",
+    "testCases": [
+      { "input": { "height": [1, 8, 6, 2, 5, 4, 8, 3, 7] }, "expected": 49 },
+      { "input": { "height": [1, 1] }, "expected": 1 },
+      { "input": { "height": [4, 3, 2, 1, 4] }, "expected": 16 }
+    ]
+  },
+  {
+    "title": "Minimum Window Substring",
+    "language": "Rust",
+    "difficulty": "Intermediate",
+    "description": "Find the minimum window substring in s that contains all characters of t.",
+    "starterCode": "fn min_window(s: String, t: String) -> String {\n    // Your code here\n    String::new()\n}",
+    "solution": "fn min_window(s: String, t: String) -> String {\n    use std::collections::HashMap;\n    let mut need: HashMap<char, i32> = HashMap::new();\n    for c in t.chars() {\n        *need.entry(c).or_insert(0) += 1;\n    }\n    let mut window: HashMap<char, i32> = HashMap::new();\n    let s_chars: Vec<char> = s.chars().collect();\n    let mut left = 0;\n    let mut valid = 0;\n    let mut start = 0;\n    let mut min_len = usize::MAX;\n    for right in 0..s_chars.len() {\n        let c = s_chars[right];\n        if let Some(&count) = need.get(&c) {\n            let entry = window.entry(c).or_insert(0);\n            *entry += 1;\n            if *entry == count {\n                valid += 1;\n            }\n        }\n        while valid == need.len() {\n            if right - left + 1 < min_len {\n                start = left;\n                min_len = right - left + 1;\n            }\n            let d = s_chars[left];\n            left += 1;\n            if let Some(&count) = need.get(&d) {\n                if let Some(entry) = window.get_mut(&d) {\n                    if *entry == count {\n                        valid -= 1;\n                    }\n                    *entry -= 1;\n                }\n            }\n        }\n    }\n    if min_len == usize::MAX {\n        String::new()\n    } else {\n        s_chars[start..start + min_len].iter().collect()\n    }\n}",
+    "testCases": [
+      { "input": { "s": "ADOBECODEBANC", "t": "ABC" }, "expected": "BANC" },
+      { "input": { "s": "a", "t": "a" }, "expected": "a" },
+      { "input": { "s": "a", "t": "aa" }, "expected": "" }
+    ]
+  },
+  {
+    "title": "Three Sum Problem",
+    "language": "Rust",
+    "difficulty": "Advanced",
+    "description": "Find all unique triplets in the array that sum to zero.",
+    "starterCode": "fn three_sum(nums: Vec<i32>) -> Vec<Vec<i32>> {\n    // Your code here\n    vec![]\n}",
+    "solution": "fn three_sum(mut nums: Vec<i32>) -> Vec<Vec<i32>> {\n    nums.sort_unstable();\n    let mut result = Vec::new();\n    for i in 0..nums.len().saturating_sub(2) {\n        if i > 0 && nums[i] == nums[i - 1] {\n            continue;\n        }\n        let mut left = i + 1;\n        let mut right = nums.len() - 1;\n        while left < right {\n            let sum = nums[i] + nums[left] + nums[right];\n            if sum == 0 {\n                result.push(vec![nums[i], nums[left], nums[right]]);\n                while left < right && nums[left] == nums[left + 1] {\n                    left += 1;\n                }\n                while left < right && nums[right] == nums[right - 1] {\n                    right -= 1;\n                }\n                left += 1;\n                right -= 1;\n            } else if sum < 0 {\n                left += 1;\n            } else {\n                right -= 1;\n            }\n        }\n    }\n    result\n}",
+    "testCases": [
+      { "input": { "nums": [-1, 0, 1, 2, -1, -4] }, "expected": [[-1, -1, 2], [-1, 0, 1]] },
+      { "input": { "nums": [0, 1, 1] }, "expected": [] },
+      { "input": { "nums": [0, 0, 0] }, "expected": [[0, 0, 0]] }
+    ]
+  },
+  {
+    "title": "Longest Palindromic Substring",
+    "language": "Rust",
+    "difficulty": "Advanced",
+    "description": "Find the longest palindromic substring in a given string.",
+    "starterCode": "fn longest_palindrome(s: String) -> String {\n    // Your code here\n    String::new()\n}",
+    "solution": "fn longest_palindrome(s: String) -> String {\n    let chars: Vec<char> = s.chars().collect();\n    let expand_around_center = |mut left: i32, mut right: usize| -> usize {\n        while left >= 0 && right < chars.len() && chars[left as usize] == chars[right] {\n            left -= 1;\n            right += 1;\n        }\n        right - (left as usize) - 1\n    };\n    let mut start = 0;\n    let mut max_len = 0;\n    for i in 0..chars.len() {\n        let len1 = expand_around_center(i as i32, i);\n        let len2 = expand_around_center(i as i32, i + 1);\n        let len = len1.max(len2);\n        if len > max_len {\n            max_len = len;\n            start = i - (len - 1) / 2;\n        }\n    }\n    chars[start..start + max_len].iter().collect()\n}",
+    "testCases": [
+      { "input": { "s": "babad" }, "expected": "bab" },
+      { "input": { "s": "cbbd" }, "expected": "bb" },
+      { "input": { "s": "a" }, "expected": "a" }
+    ]
+  },
+  {
+    "title": "Trapping Rain Water",
+    "language": "Rust",
+    "difficulty": "Advanced",
+    "description": "Calculate how much water can be trapped after raining given elevation map represented by an array.",
+    "starterCode": "fn trap(height: Vec<i32>) -> i32 {\n    // Your code here\n    0\n}",
+    "solution": "fn trap(height: Vec<i32>) -> i32 {\n    if height.is_empty() {\n        return 0;\n    }\n    let mut left = 0;\n    let mut right = height.len() - 1;\n    let mut left_max = 0;\n    let mut right_max = 0;\n    let mut water = 0;\n    while left < right {\n        if height[left] < height[right] {\n            if height[left] >= left_max {\n                left_max = height[left];\n            } else {\n                water += left_max - height[left];\n            }\n            left += 1;\n        } else {\n            if height[right] >= right_max {\n                right_max = height[right];\n            } else {\n                water += right_max - height[right];\n            }\n            right -= 1;\n        }\n    }\n    water\n}",
+    "testCases": [
+      { "input": { "height": [0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1] }, "expected": 6 },
+      { "input": { "height": [4, 2, 0, 3, 2, 5] }, "expected": 9 },
+      { "input": { "height": [4, 2, 3] }, "expected": 1 }
+    ]
+  }
+]

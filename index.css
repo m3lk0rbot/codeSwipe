@@ -1,0 +1,396 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Dark theme base styles */
+:root {
+  --bg-primary: #000000;
+  --bg-secondary: #161823;
+  --bg-tertiary: #1f1f23;
+  --text-primary: #ffffff;
+  --text-secondary: #a8a8b3;
+  --text-muted: #6b7280;
+  --accent-primary: #ff2d55;
+  --accent-secondary: #5851db;
+  --border-color: #2d2d30;
+}
+
+/* Override default body styles */
+body {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+}
+
+/* Custom utilities */
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.line-clamp-3 {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Dark theme scrollbar - always visible */
+::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: #1a1a1a;
+  border-radius: 6px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #4a4a4a;
+  border-radius: 6px;
+  border: 2px solid #1a1a1a;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #6a6a6a;
+}
+
+::-webkit-scrollbar-corner {
+  background: #1a1a1a;
+}
+
+/* Force scrollbars to always be visible */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #4a4a4a #1a1a1a;
+}
+
+/* Force scrollbars to always be visible */
+.scrollable-content {
+  overflow-y: scroll !important;
+  scrollbar-width: thin;
+  scrollbar-color: #4a4a4a #1a1a1a;
+}
+
+/* Ensure all page containers have proper scrolling */
+.page-container * {
+  box-sizing: border-box;
+}
+
+/* Make sure scrollable areas are properly defined */
+.overflow-y-auto {
+  overflow-y: scroll !important;
+}
+
+/* Ensure content areas are properly scrollable */
+.page-container {
+  height: calc(100vh - 4rem); /* Account for footer height */
+  overflow-y: scroll !important; /* Force scrollbar to always show */
+  scrollbar-width: thin;
+  scrollbar-color: #4a4a4a var(--bg-secondary);
+  position: relative;
+  -webkit-overflow-scrolling: touch; /* iOS smooth scrolling */
+}
+
+/* Firefox scrollbar styling */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #4a4a4a #161823;
+}
+
+/* Ensure mobile scrolling works properly */
+@media (max-width: 768px) {
+  .page-container {
+    height: calc(100vh - 4rem);
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
+/* Fix for iOS Safari scrolling */
+.page-container {
+  -webkit-overflow-scrolling: touch;
+  transform: translateZ(0);
+}
+
+/* Custom animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.animate-slideInRight {
+  animation: slideInRight 0.3s ease-out;
+}
+
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-slideInUp {
+  animation: slideInUp 0.3s ease-out;
+}
+
+/* Mobile-first responsive design */
+@media (max-width: 768px) {
+  .mobile-padding {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+  
+  /* Mobile code editor optimizations */
+  .mobile-code-editor {
+    touch-action: manipulation;
+  }
+  
+  .mobile-code-editor .monaco-editor {
+    font-size: 16px !important; /* Prevent zoom on iOS */
+    line-height: 22px !important;
+  }
+  
+  .mobile-code-editor .monaco-editor .view-lines {
+    padding: 8px 0;
+  }
+  
+  /* Better mobile scrollbars for Monaco */
+  .mobile-code-editor .monaco-scrollable-element > .scrollbar {
+    width: 14px !important;
+    height: 14px !important;
+  }
+  
+  .mobile-code-editor .monaco-scrollable-element > .scrollbar > .slider {
+    background: rgba(255, 255, 255, 0.3) !important;
+    border-radius: 7px !important;
+  }
+}
+
+/* Monaco Editor Dark Theme Customizations */
+.monaco-editor.vs-dark {
+  background-color: #0f172a !important; /* Match app background */
+}
+
+.monaco-editor.vs-dark .margin {
+  background-color: #0f172a !important;
+}
+
+.monaco-editor.vs-dark .monaco-editor-background {
+  background-color: #0f172a !important;
+}
+
+/* Hide Monaco Editor Overview Ruler (gray area on right) */
+.monaco-editor .decorationsOverviewRuler {
+  display: none !important;
+}
+
+.monaco-editor .minimap {
+  display: none !important;
+}
+
+.monaco-editor .overflow-guard {
+  margin-right: 0 !important;
+}
+
+/* Touch-friendly editor */
+.code-editor-container {
+  position: relative;
+  height: 100%;
+  -webkit-touch-callout: none;
+  -webkit-user-select: text;
+  user-select: text;
+}
+
+.code-editor-container .monaco-editor {
+  border-radius: 6px;
+  touch-action: manipulation;
+}
+
+/* Improve touch scrolling */
+.monaco-editor .monaco-scrollable-element {
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Better mobile cursor */
+@media (max-width: 768px) {
+  .monaco-editor .cursor {
+    width: 3px !important; /* Thicker cursor for mobile */
+  }
+  
+  /* Disable hover effects on mobile */
+  .monaco-editor .view-line:hover {
+    background: transparent !important;
+  }
+}
+
+/* Mobile touch optimizations */
+@media (max-width: 768px) {
+  .code-editor-container {
+    min-height: 250px;
+  }
+  
+  /* Larger touch targets on mobile */
+  .monaco-editor .suggest-widget {
+    font-size: 16px !important;
+  }
+  
+  .monaco-editor .parameter-hints-widget {
+    font-size: 16px !important;
+  }
+}
+
+/* Focus styles for accessibility */
+.focus-ring:focus {
+  outline: 2px solid var(--accent-primary);
+  outline-offset: 2px;
+}
+
+/* Dark theme button styles */
+.btn-primary {
+  @apply bg-red-500 hover:bg-red-600 text-white font-medium py-2 px-4 rounded-md transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-red-400 focus:ring-offset-2 focus:ring-offset-black;
+}
+
+.btn-secondary {
+  @apply bg-gray-800 hover:bg-gray-700 text-white font-medium py-2 px-4 rounded-md transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2 focus:ring-offset-black;
+}
+
+/* Dark theme card styles */
+.card {
+  background-color: var(--bg-secondary);
+  @apply rounded-lg p-4 shadow-lg border border-gray-800;
+}
+
+.card-hover {
+  background-color: var(--bg-secondary);
+  @apply rounded-lg p-4 shadow-lg border border-gray-800 hover:bg-gray-800 transition-colors duration-200 cursor-pointer;
+}
+
+/* Loading spinner */
+.spinner {
+  @apply w-6 h-6 border-2 border-red-500 border-t-transparent rounded-full animate-spin;
+}
+
+/* Text gradient */
+.text-gradient {
+  background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Glass morphism effect */
+.glass {
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Dark theme specific overrides */
+.bg-dark-primary {
+  background-color: var(--bg-primary);
+}
+
+.bg-dark-secondary {
+  background-color: var(--bg-secondary);
+}
+
+.bg-dark-tertiary {
+  background-color: var(--bg-tertiary);
+}
+
+.text-dark-primary {
+  color: var(--text-primary);
+}
+
+.text-dark-secondary {
+  color: var(--text-secondary);
+}
+
+.text-dark-muted {
+  color: var(--text-muted);
+}
+
+.border-dark {
+  border-color: var(--border-color);
+}
+
+/* Smooth transitions */
+* {
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+
+/* Override Tailwind's default colors for dark theme */
+.bg-slate-900 {
+  background-color: var(--bg-primary) !important;
+}
+
+.bg-slate-800 {
+  background-color: var(--bg-secondary) !important;
+}
+
+.bg-slate-700 {
+  background-color: var(--bg-tertiary) !important;
+}
+
+.text-white {
+  color: var(--text-primary) !important;
+}
+
+.text-slate-300 {
+  color: var(--text-secondary) !important;
+}
+
+.text-slate-400 {
+  color: var(--text-muted) !important;
+}
+
+.border-slate-700 {
+  border-color: var(--border-color) !important;
+}
+
+.border-slate-800 {
+  border-color: var(--border-color) !important;
+}
+
+
+/* Hide Test Results section (first mb-6 after challenge info) */
+.bg-gray-800 .p-6 > div.mb-6:nth-child(2) {
+  display: none !important;
+}
+bg-blacks-600 {
+    --tw-bg-opacity: 1;
+    background-color: rgb(26 31 24);
+}
+
+
+
+

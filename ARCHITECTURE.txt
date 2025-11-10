@@ -1,0 +1,183 @@
+# Code Swipe - Architecture Diagram
+
+This document provides a comprehensive overview of the Code Swipe system architecture, data flow, and technology stack, designed for the Google Cloud Run Hackathon.
+
+## System Architecture Overview
+
+```
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                              USER DEVICES                                    │
+│                (PWA on Mobile, Tablet, Desktop Browsers)                     │
+└────────────────────────────────┬────────────────────────────────────────────┘
+                                 │ HTTPS
+                                 │
+┌────────────────────────────────▼────────────────────────────────────────────┐
+│                         GOOGLE CLOUD RUN                                     │
+│  ┌─────────────────────────────────────────────────────────────────────┐   │
+│  │         Frontend Service (codeswipe-frontend) [React PWA]            │   │
+│  │  • Serves UI & static assets                                        │   │
+│  │  • Handles user interaction & client-side logic                     │   │
+│  │  • Auto-scales 0-100 instances                                      │   │
+│  └──────────────────────┬──────────────────────────────────────────────┘   │
+│                         │ REST API Calls                                     │
+│                         │                                                    │
+│  ┌──────────────────────▼──────────────────────────────────────────────┐   │
+│  │         Backend Service (codeswipe-curator) [Node.js API]            │   │
+│  │  • AI question generation & code review                            │   │
+│  │  • Securely accesses other GCP services                            │   │
+│  │  • Auto-scales 0-50 instances                                      │   │
+│  └──────────────────────┬──────────────────────────────────────────────┘   │
+└─────────────────────────┼──────────────────────────────────────────────────┘
+                          │ (Secure Service-to-Service Communication)
+        ┌─────────────────┼─────────────────┐
+        │                 │                 │
+        │                 │                 │
+┌───────▼────────┐ ┌──────▼──────┐ ┌──────▼──────────┐
+│  Google AI     │ │  Firebase   │ │  Piston API     │
+│  (Gemini API)  │ │  Platform   │ │  (External)     │
+└───────┬────────┘ └──────┬──────┘ └──────┬──────────┘
+        │                 │                │
+┌───────▼────────┐ ┌──────▼──────┐ ┌──────▼──────────┐
+│- Gemini 2.5 Pro│ │- Firestore  │ │- Code Execution │
+│- Gemini 2.5 F..│ │- Auth       │ │- 8 Languages    │
+│- Context Cache │ │- Storage    │ │- Sandboxed      │
+└────────────────┘ └─────────────┘ └─────────────────┘
+```
+
+## Detailed Data Flow & Component Architecture
+
+### 1. Question Delivery Flow
+```
+User Request ─> [Mode Selection] ─┬─> (AI Mode) ─> [Curator Service] ─> [Gemini AI] ─> [Parse/Validate] ─> [Save to Firestore] ─> [Return to User]
+                                  │
+                                  └─> (DB Mode) ─> [Firebase Firestore] ─> [Return Cached Question]
+```
+
+### 2. AI Code Review Flow
+```
+User Submits Code ─> [Run Tests] ─> [Result Modal Opens] ─┬─> [Show Test Results]
+                                                          │
+                                                          └─> [Request AI Review] ─> [Curator Service] ─> [Gemini AI] ─> [Generate Review] ─> [Display in Modal]
+```
+
+### 3. Code Execution Flow
+```
+User Code ─> [geminiService] ─┬─> (JavaScript) ─> [Client-Side Sandbox] ─> [Parse Results] ─┐
+                              │                                                                ├─> [Compare with Expected] ─> [Return Test Results]
+                              └─> (Other Langs) ─> [Piston API] ─> [Sandbox Exec] ─> [Parse Results] ─┘
+```
+
+### 4. Database Schema (Firebase Firestore)
+```
+Collections:
+
+Questions
+  • {contentHash}
+    - question_id (string)
+    - title, language, difficulty, description
+    - starterCode, solution, solutionHash, testCases
+    - created_at (timestamp)
+
+Users
+  • {userId}
+    - uid, email, displayName, photoURL
+    - created_at (timestamp)
+
+Settings
+  • {settingsId}
+    - user_id (string)
+    - level, languages, topics
+    - updated_at (timestamp)
+
+Achievements
+  • {achievementId}
+    - user_id, question_id, completionDate
+    - question (snapshot object), solution (string)
+
+Likes
+  • {likeId}
+    - user_id, question_id, created_at
+
+Submissions
+  • {submissionId}
+    - user_id, question_id, userCode, results, passed
+    - submitted_at (timestamp)
+
+--- FUTURE SOCIAL FEATURES ---
+
+Groups (Future)
+  • {groupId}
+    - name, owner_id, members (array)
+
+Friends (Future)
+  • {friendshipId}
+    - user_id_1, user_id_2, status
+
+GlobalRankings (Future)
+  • {userId}
+    - total_solved, rank, points
+```
+
+### 5. PWA Architecture
+```
+┌─────────────────────────────────────────────────────────────┐
+│                  Progressive Web App Features                │
+├─────────────────────────────────────────────────────────────┤
+│  Manifest (manifest.json):                                   │
+│  • App name, icons, theme colors                            │
+│  • Display mode: standalone                                 │
+│  • App shortcuts for quick actions                          │
+│                                                              │
+│  Installability:                                            │
+│  • "Add to Home Screen" / "Install" prompt                  │
+│  • Native app-like experience (full-screen, offline)        │
+│                                                              │
+│  Offline Capabilities (Planned):                            │
+│  • Service Worker for caching assets & API calls            │
+│  • Offline access to previously viewed challenges           │
+│  • Background sync for achievements and progress            │
+└─────────────────────────────────────────────────────────────┘
+```
+
+### 6. CI/CD Pipeline
+```
+┌─────────────────────────────────────────────────────────────┐
+│                  CI/CD Pipeline (GitHub Actions)             │
+└─────────────────────────────────────────────────────────────┘
+
+Developer Push to `main` branch
+     │
+     ▼
+┌─────────────────┐
+│ GitHub Actions  │
+│ Workflow Trigger│
+└────────┬────────┘
+         │
+    ┌────┴────┐
+    │         │
+    ▼         ▼
+┌──────────┐  ┌──────────────┐
+│Build & Test│  │Build & Test  │
+│Frontend  │  │Backend       │
+└────┬─────┘  └──────┬───────┘
+     │               │
+     ▼               ▼
+┌──────────┐  ┌──────────────┐
+│Deploy to │  │Deploy to     │
+│Cloud Run │  │Cloud Run     │
+│(frontend)│  │(curator)     │
+└────┬─────┘  └──────┬───────┘
+     │               │
+     └───────┬───────┘
+             │
+             ▼
+      ┌──────────────┐
+      │ Production   │
+      │   is Live    │
+      └──────────────┘
+```
+
+---
+**Architecture Version**: 1.1
+**Last Updated**: November 10 2025
+**Built for**: Google Cloud Run Hackathon

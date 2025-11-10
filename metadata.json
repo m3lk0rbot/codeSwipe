@@ -1,0 +1,5 @@
+{
+  "name": "CodeSwipe: The TikTok for Developers",
+  "description": "An interactive, swipe-based learning platform for developers. Users scroll through bite-sized, executable code challenges, write solutions in-app, and get instant feedback from AI agents. Built for the Google Cloud Run Hackathon.",
+  "requestFramePermissions": []
+}
