@@ -96,10 +96,6 @@ This project is submitted to the general category, demonstrating an innovative, 
 
 ✅ **Production-Ready & Scalable**: Designed with error handling, caching, and a serverless architecture that can scale from zero to thousands of users automatically.
 
-### **Bonus Points**
-
--   **Multiple Cloud Run Services (0.4 points)**: Deployed separate `codeswipe-frontend` and `codeswipe-curator` services.
--   **Google AI Model Usage (0.4 points)**: Utilized both Gemini Pro and Gemini Flash, with a cost-saving context caching implementation.
 
 ---
 
