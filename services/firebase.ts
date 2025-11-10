@@ -13,7 +13,7 @@ import type { User as FirebaseUser } from 'firebase/auth';
 import type { Difficulty, ProgrammingLanguage } from '../types';
 
 const firebaseConfig = {
-  apiKey: "AIzaSyAO5S3OWAuWoeu7PgZDKtXjSk_Ki2NoxSA",
+  apiKey: "your Google API Key",
   authDomain: "codeswipe-9ea2d.firebaseapp.com",
   projectId: "codeswipe-9ea2d",
   storageBucket: "codeswipe-9ea2d.firebasestorage.app",
